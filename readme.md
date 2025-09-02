@@ -1,6 +1,96 @@
-# Markdown Редактор
+# MD Reader - Markdown Documentation Tool
 
-Веб-редактор для файлов Markdown с интуитивно понятным интерфейсом на русском языке.
+MD Reader is a comprehensive tool for viewing and editing Markdown documents. It includes both a command-line interface (CLI) for browsing documentation and a web-based editor for creating and modifying Markdown files.
+
+## Features
+
+### CLI Viewer
+- Interactive viewing of Markdown files and directories
+- Automatic table of contents generation
+- Fuzzy search through headers
+- Syntax-highlighted section viewing
+- Caching for improved performance
+- Security enhancements (path validation, input sanitization)
+
+### Web Editor
+- Modern web-based editor with real-time preview
+- Syntax highlighting for code blocks
+- Automatic table of contents navigation
+- Auto-save functionality
+- Drag-and-drop file support
+- Fully localized Russian interface
+- Responsive design for all devices
+
+## Documentation
+
+### For Users
+- [User Guide (English)](docs/USER_GUIDE_EN.md) - Complete guide for using MD Reader
+- [Руководство пользователя (Russian)](docs/USER_GUIDE_RU.md) - Полное руководство по использованию MD Reader
+
+### For Developers
+- [Specification (English)](docs/SPECIFICATION_EN.md) - Technical specification of the project
+- [Спецификация (Russian)](docs/SPECIFICATION_RU.md) - Техническая спецификация проекта
+- [README_ENHANCED.md](README_ENHANCED.md) - Enhanced security and reliability features
+- [PROJECT_COMPLETION_SUMMARY.md](PROJECT_COMPLETION_SUMMARY.md) - Project completion summary
+
+### Component Documentation
+- [md_reader CLI documentation](md_reader/readme.md) - Documentation for the command-line interface
+- [web_editor documentation](web_editor/README.md) - Documentation for the web editor
+
+## Installation
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd md_reader
+
+# Install in development mode
+pip install -e .
+
+# For development (includes testing tools)
+pip install -e ".[dev]"
+```
+
+## Usage
+
+### CLI Mode
+```bash
+# View a single file in interactive mode
+md-viewer open document.md
+
+# View all files in a directory
+md-viewer open /path/to/markdown/files
+
+# Launch TUI interface
+md-viewer tui /path/to/markdown/files
+```
+
+### Web Editor
+```bash
+# Navigate to the web editor directory
+cd web_editor
+
+# Run the editor
+python run.py
+```
+
+## Project Structure
+
+```
+md_reader/
+├── md_reader/              # Core CLI library
+├── web_editor/             # Web-based editor
+├── docs/                   # Documentation
+├── tests/                  # Test suite
+├── dist/                   # Compiled executables
+└── README.md               # This file
+```
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+# Web-редактор для файлов Markdown с интуитивно понятным интерфейсом на русском языке.
 
 ## Особенности
 
@@ -44,7 +134,7 @@
 
 ### Метод 1: Запуск через Python
 
-```bash
+``bash
 # Установка зависимостей
 pip install -r requirements.txt
 
@@ -54,21 +144,21 @@ python app.py
 
 ### Метод 2: Демонстрационная версия
 
-```bash
+``bash
 # Запуск упрощенной версии (без Flask)
 python run_demo.py
 ```
 
 ### Метод 3: Готовый исполняемый файл
 
-```bash
+``bash
 # Просто запустите готовый файл
 .\dist\MarkdownEditor.exe
 ```
 
 ### Метод 4: Сборка из исходников
 
-```bash
+``bash
 # Базовая сборка
 build.bat
 
