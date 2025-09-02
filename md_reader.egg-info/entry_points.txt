@@ -1,0 +1,2 @@
+[console_scripts]
+md-viewer = md_reader.cli:app

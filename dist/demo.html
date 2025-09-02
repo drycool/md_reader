@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Веб-редактор Markdown - Демо</title>
+    
+    <!-- External libraries -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/github.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        /* Inline styles for demo */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .app-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 20px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .app-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #4f46e5;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .app-title i {
+            color: #f59e0b;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            outline: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; }
+        .btn-success { background: linear-gradient(135deg, #10b981, #047857); color: white; }
+        .btn-warning { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
+        .btn-info { background: linear-gradient(135deg, #06b6d4, #0891b2); color: white; }
+
+        .app-main {
+            display: flex;
+            height: calc(100vh - 80px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 16px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(79, 70, 229, 0.05);
+        }
+
+        .sidebar-header h3 {
+            font-size: 16px;
+            color: #4f46e5;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .file-list {
+            flex: 1;
+            padding: 8px;
+        }
+
+        .file-item {
+            padding: 10px 12px;
+            margin: 2px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .file-item:hover {
+            background: rgba(79, 70, 229, 0.1);
+            transform: translateX(4px);
+        }
+
+        .file-item.active {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+        }
+
+        .workspace {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        .tabs-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 4px;
+        }
+
+        .tab {
+            padding: 12px 20px;
+            border: none;
+            background: transparent;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+
+        .tab:hover {
+            background: rgba(79, 70, 229, 0.1);
+            color: #4f46e5;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+        }
+
+        .content-panels {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .panel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: none;
+            flex-direction: column;
+        }
+
+        .panel.active {
+            display: flex;
+        }
+
+        .editor-container {
+            flex: 1;
+            position: relative;
+        }
+
+        .editor-toolbar {
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 8px 16px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            overflow-x: auto;
+        }
+
+        .toolbar-group {
+            display: flex;
+            gap: 4px;
+            padding: 0 8px;
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .tool-btn {
+            padding: 6px 10px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: #666;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
+        }
+
+        .tool-btn:hover {
+            background: rgba(79, 70, 229, 0.1);
+            color: #4f46e5;
+        }
+
+        .preview-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            background: #ffffff;
+        }
+
+        .welcome-message {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .welcome-message h2 {
+            color: #4f46e5;
+            margin-bottom: 16px;
+            font-size: 28px;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.05), rgba(124, 58, 237, 0.05));
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(79, 70, 229, 0.1);
+        }
+
+        .feature i {
+            font-size: 32px;
+            color: #4f46e5;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .feature h3 {
+            color: #1f2937;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .feature p {
+            color: #6b7280;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .status-bar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .demo-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: absolute;
+                left: -100%;
+                z-index: 100;
+                transition: left 0.3s ease;
+            }
+            
+            .sidebar.visible {
+                left: 0;
+            }
+            
+            .feature-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/markdown/markdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.10/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+</head>
+<body>
+    <!-- Demo badge -->
+    <div class="demo-badge">
+        <i class="fas fa-eye"></i> ДЕМО ВЕРСИЯ
+    </div>
+
+    <!-- App header -->
+    <header class="app-header">
+        <div class="header-content">
+            <h1 class="app-title">
+                <i class="fas fa-edit"></i>
+                Веб-редактор Markdown
+            </h1>
+            <div class="header-actions">
+                <button class="btn btn-success" onclick="showAlert('Создание нового файла')">
+                    <i class="fas fa-plus"></i> Новый
+                </button>
+                <button class="btn btn-primary" onclick="showAlert('Открытие файла')">
+                    <i class="fas fa-folder-open"></i> Открыть
+                </button>
+                <button class="btn btn-warning" onclick="showAlert('Сохранение файла')">
+                    <i class="fas fa-save"></i> Сохранить
+                </button>
+                <button class="btn btn-info" onclick="showAlert('Скачивание файла')">
+                    <i class="fas fa-download"></i> Скачать
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="app-main">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-files-o"></i> Файлы проекта</h3>
+            </div>
+            <div class="file-list">
+                <div class="file-item active" onclick="selectFile(this, 'welcome')">
+                    <i class="fas fa-file-text"></i>
+                    <div>
+                        <div>добро_пожаловать.md</div>
+                        <small style="opacity: 0.7;">2.1 КБ • сегодня</small>
+                    </div>
+                </div>
+                <div class="file-item" onclick="selectFile(this, 'api')">
+                    <i class="fas fa-file-text"></i>
+                    <div>
+                        <div>api_документация.md</div>
+                        <small style="opacity: 0.7;">1.5 КБ • вчера</small>
+                    </div>
+                </div>
+                <div class="file-item" onclick="selectFile(this, 'readme')">
+                    <i class="fas fa-file-text"></i>
+                    <div>
+                        <div>README.md</div>
+                        <small style="opacity: 0.7;">4.2 КБ • 2 дня назад</small>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Workspace -->
+        <div class="workspace">
+            <!-- Tabs -->
+            <div class="tabs-container">
+                <div class="tabs">
+                    <button class="tab" onclick="switchTab('editor')" data-tab="editor">
+                        <i class="fas fa-code"></i> Редактор
+                    </button>
+                    <button class="tab active" onclick="switchTab('preview')" data-tab="preview">
+                        <i class="fas fa-eye"></i> Предварительный просмотр
+                    </button>
+                    <button class="tab" onclick="switchTab('split')" data-tab="split">
+                        <i class="fas fa-columns"></i> Разделённый режим
+                    </button>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font-weight: 600; color: #4f46e5;">добро_пожаловать.md</span>
+                    <span style="padding: 4px 8px; border-radius: 12px; font-size: 12px; background: #d1fae5; color: #065f46;">Готов</span>
+                </div>
+            </div>
+
+            <!-- Content panels -->
+            <div class="content-panels">
+                <!-- Editor panel -->
+                <div class="panel" id="editorPanel">
+                    <div class="editor-toolbar">
+                        <div class="toolbar-group">
+                            <button class="tool-btn" onclick="showAlert('Жирный текст')">
+                                <i class="fas fa-bold"></i>
+                            </button>
+                            <button class="tool-btn" onclick="showAlert('Курсив')">
+                                <i class="fas fa-italic"></i>
+                            </button>
+                            <button class="tool-btn" onclick="showAlert('Зачёркнутый')">
+                                <i class="fas fa-strikethrough"></i>
+                            </button>
+                        </div>
+                        <div class="toolbar-group">
+                            <button class="tool-btn" onclick="showAlert('Заголовок')">
+                                <i class="fas fa-heading"></i>
+                            </button>
+                            <button class="tool-btn" onclick="showAlert('Ссылка')">
+                                <i class="fas fa-link"></i>
+                            </button>
+                            <button class="tool-btn" onclick="showAlert('Изображение')">
+                                <i class="fas fa-image"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="editor-container">
+                        <textarea style="width: 100%; height: 100%; border: none; font-family: 'Fira Code', monospace; font-size: 14px; padding: 20px; background: #fafafa; resize: none; outline: none;" placeholder="Начните печатать ваш Markdown здесь..."># Добро пожаловать в веб-редактор Markdown! 🚀
+
+Это **красочный и удобный** редактор для работы с Markdown документами.
+
+## ✨ Основные возможности
+
+- 🎨 Красивый интерфейс
+- 👀 Живой предварительный просмотр  
+- 🌈 Подсветка синтаксиса
+- 📋 Автоматическое оглавление
+
+Попробуйте переключиться между вкладками!</textarea>
+                    </div>
+                </div>
+
+                <!-- Preview panel -->
+                <div class="panel active" id="previewPanel">
+                    <div class="preview-content">
+                        <h1>Добро пожаловать в веб-редактор Markdown! 🚀</h1>
+                        <p>Это <strong>красочный и удобный</strong> редактор для работы с Markdown документами прямо в вашем браузере.</p>
+                        
+                        <h2>✨ Основные возможности</h2>
+                        <div class="feature-list">
+                            <div class="feature">
+                                <i class="fas fa-magic"></i>
+                                <h3>Живой предварительный просмотр</h3>
+                                <p>Видите результат в реальном времени</p>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-palette"></i>
+                                <h3>Подсветка синтаксиса</h3>
+                                <p>Красочное и удобное редактирование</p>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-list-ol"></i>
+                                <h3>Автоматическое оглавление</h3>
+                                <p>Быстрая навигация по документу</p>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-save"></i>
+                                <h3>Автосохранение</h3>
+                                <p>Ваши изменения сохраняются автоматически</p>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-keyboard"></i>
+                                <h3>Горячие клавиши</h3>
+                                <p>Быстрая работа с клавиатуры</p>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-mobile-alt"></i>
+                                <h3>Адаптивный дизайн</h3>
+                                <p>Работает на любых устройствах</p>
+                            </div>
+                        </div>
+
+                        <h2>🛠️ Как использовать</h2>
+                        <ul>
+                            <li><strong>Создание файла:</strong> Нажмите "Новый" в шапке</li>
+                            <li><strong>Открытие файла:</strong> Выберите из списка или нажмите "Открыть"</li>
+                            <li><strong>Редактирование:</strong> Переключитесь на вкладку "Редактор"</li>
+                            <li><strong>Просмотр:</strong> Используйте "Разделённый режим" для одновременного редактирования и просмотра</li>
+                        </ul>
+
+                        <h2>⌨️ Горячие клавиши</h2>
+                        <table style="width: 100%; border-collapse: collapse; margin: 16px 0;">
+                            <thead>
+                                <tr style="background: #f9fafb;">
+                                    <th style="padding: 12px; text-align: left; border: 1px solid #e5e7eb;">Комбинация</th>
+                                    <th style="padding: 12px; text-align: left; border: 1px solid #e5e7eb;">Действие</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td style="padding: 12px; border: 1px solid #e5e7eb;"><code>Ctrl+S</code></td><td style="padding: 12px; border: 1px solid #e5e7eb;">Сохранить файл</td></tr>
+                                <tr><td style="padding: 12px; border: 1px solid #e5e7eb;"><code>Ctrl+O</code></td><td style="padding: 12px; border: 1px solid #e5e7eb;">Открыть файл</td></tr>
+                                <tr><td style="padding: 12px; border: 1px solid #e5e7eb;"><code>Ctrl+N</code></td><td style="padding: 12px; border: 1px solid #e5e7eb;">Новый файл</td></tr>
+                                <tr><td style="padding: 12px; border: 1px solid #e5e7eb;"><code>F1</code></td><td style="padding: 12px; border: 1px solid #e5e7eb;">Справка</td></tr>
+                            </tbody>
+                        </table>
+
+                        <blockquote style="border-left: 4px solid #4f46e5; margin: 16px 0; padding: 8px 16px; background: #f8fafc; color: #64748b; font-style: italic;">
+                            <strong>Совет:</strong> Это демо-версия интерфейса. Полная версия с Flask сервером поддерживает реальную работу с файлами, автосохранение и многое другое!
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Status bar -->
+    <footer class="status-bar">
+        <div>
+            <span>Строка: 1, Столбец: 1</span>
+            <span style="margin-left: 16px;">Слов: 147</span>
+        </div>
+        <div>
+            <span>Демо-режим: только просмотр</span>
+        </div>
+    </footer>
+
+    <script>
+        function switchTab(tabName) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Add active class to clicked tab
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            
+            // Show corresponding panel
+            document.querySelectorAll('.panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            
+            if (tabName === 'editor') {
+                document.getElementById('editorPanel').classList.add('active');
+            } else if (tabName === 'preview') {
+                document.getElementById('previewPanel').classList.add('active');
+            } else if (tabName === 'split') {
+                document.getElementById('editorPanel').classList.add('active');
+                document.getElementById('previewPanel').classList.add('active');
+                document.querySelector('.content-panels').style.display = 'flex';
+                document.getElementById('editorPanel').style.width = '50%';
+                document.getElementById('previewPanel').style.width = '50%';
+                document.getElementById('previewPanel').style.position = 'relative';
+                return;
+            }
+            
+            // Reset split view
+            document.querySelector('.content-panels').style.display = 'block';
+            document.getElementById('editorPanel').style.width = 'auto';
+            document.getElementById('previewPanel').style.width = 'auto';
+            document.getElementById('previewPanel').style.position = 'absolute';
+        }
+        
+        function selectFile(element, fileType) {
+            document.querySelectorAll('.file-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            element.classList.add('active');
+            
+            showAlert(`Выбран файл: ${element.querySelector('div > div').textContent}`);
+        }
+        
+        function showAlert(message) {
+            // Create notification
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(135deg, #10b981, #047857);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+                font-size: 14px;
+                font-weight: 500;
+                max-width: 300px;
+            `;
+            
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-check-circle"></i>
+                    <span>${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: white; margin-left: auto; cursor: pointer;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Add animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { opacity: 0; transform: translateX(100%); }
+                    to { opacity: 1; transform: translateX(0); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 3000);
+        }
+        
+        // Show welcome message
+        setTimeout(() => {
+            showAlert('Добро пожаловать в демо веб-редактора Markdown!');
+        }, 1000);
+    </script>
+</body>
+</html>

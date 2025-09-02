@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Markdown Редактор</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked@4.0.10/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #1e1e1e;
+      color: #d4d4d4;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+    .sidebar {
+      width: 250px;
+      background: #2d2d2d;
+      border-right: 1px solid #444;
+      display: flex;
+      flex-direction: column;
+    }
+    .file-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+    }
+    .file-list h3 {
+      margin: 0 0 10px 0;
+      color: #66aaff;
+      font-size: 14px;
+    }
+    .file-item {
+      padding: 8px;
+      margin: 2px 0;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .file-item:hover {
+      background: #3a3a3a;
+    }
+    .file-item.active {
+      background: #0e639c;
+    }
+    .file-actions {
+      padding: 10px;
+      border-top: 1px solid #444;
+    }
+    .file-actions button {
+      width: 100%;
+      padding: 8px;
+      margin: 2px 0;
+      background: #0e639c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .file-actions button:hover {
+      background: #1177bb;
+    }
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .toolbar {
+      padding: 10px;
+      background: #2d2d2d;
+      border-bottom: 1px solid #444;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .file-input-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .file-input-container input[type="file"] {
+      display: none;
+    }
+    .file-input-container label {
+      padding: 6px 12px;
+      background: #0e639c;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .file-input-container label:hover {
+      background: #1177bb;
+    }
+    .toolbar button {
+      padding: 6px 12px;
+      background: #0e639c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .toolbar button:hover {
+      background: #1177bb;
+    }
+    .toolbar button:disabled {
+      background: #555;
+      cursor: not-allowed;
+    }
+    .editor-container {
+      flex: 1;
+      display: flex;
+    }
+    .editor-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #444;
+    }
+    .editor-header {
+      padding: 8px 15px;
+      background: #252525;
+      border-bottom: 1px solid #444;
+      font-size: 12px;
+      color: #888;
+    }
+    .editor {
+      flex: 1;
+      padding: 15px;
+      background: #1e1e1e;
+      border: none;
+      color: #d4d4d4;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 14px;
+      line-height: 1.5;
+      resize: none;
+      outline: none;
+    }
+    .preview-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .preview-header {
+      padding: 8px 15px;
+      background: #252525;
+      border-bottom: 1px solid #444;
+      font-size: 12px;
+      color: #888;
+    }
+    .preview {
+      flex: 1;
+      padding: 15px;
+      background: #1e1e1e;
+      overflow-y: auto;
+      line-height: 1.6;
+    }
+    .status-bar {
+      padding: 5px 15px;
+      background: #252525;
+      border-top: 1px solid #444;
+      font-size: 12px;
+      color: #888;
+      display: flex;
+      justify-content: space-between;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal.show {
+      display: flex;
+    }
+    .modal-content {
+      background: #2d2d2d;
+      padding: 20px;
+      border-radius: 8px;
+      width: 400px;
+      max-width: 90%;
+    }
+    .modal-content h3 {
+      margin: 0 0 15px 0;
+      color: #66aaff;
+    }
+    .modal-content input {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0 15px 0;
+      background: #1e1e1e;
+      border: 1px solid #444;
+      border-radius: 4px;
+      color: #d4d4d4;
+    }
+    .modal-content .buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+    .modal-content button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .modal-content button.primary {
+      background: #0e639c;
+      color: white;
+    }
+    .modal-content button.secondary {
+      background: #555;
+      color: white;
+    }
+
+    /* Markdown styles */
+    .preview h1, .preview h2, .preview h3, .preview h4, .preview h5, .preview h6 {
+      color: #66aaff;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+    }
+    .preview h1 { font-size: 2em; border-bottom: 1px solid #444; padding-bottom: 0.3em; }
+    .preview h2 { font-size: 1.5em; }
+    .preview h3 { font-size: 1.25em; }
+    .preview p { margin: 1em 0; }
+    .preview blockquote {
+      border-left: 4px solid #0e639c;
+      padding-left: 15px;
+      margin: 1em 0;
+      color: #ccc;
+    }
+    .preview pre {
+      background: #252525;
+      border-radius: 4px;
+      padding: 15px;
+      overflow-x: auto;
+      margin: 1em 0;
+    }
+    .preview code {
+      background: #333;
+      padding: 2px 4px;
+      border-radius: 2px;
+      font-family: 'Consolas', 'Monaco', monospace;
+    }
+    .preview pre code {
+      background: none;
+      padding: 0;
+    }
+    .preview ul, .preview ol {
+      margin: 1em 0;
+      padding-left: 2em;
+    }
+    .preview li { margin: 0.5em 0; }
+    .preview table {
+      border-collapse: collapse;
+      margin: 1em 0;
+      width: 100%;
+    }
+    .preview th, .preview td {
+      border: 1px solid #444;
+      padding: 8px;
+      text-align: left;
+    }
+    .preview th {
+      background: #333;
+      color: #66aaff;
+    }
+    .preview a {
+      color: #66aaff;
+      text-decoration: none;
+    }
+    .preview a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        height: 150px;
+        flex-direction: row;
+      }
+      .file-list {
+        flex: 1;
+      }
+      .file-actions {
+        width: 150px;
+        border-top: none;
+        border-left: 1px solid #444;
+      }
+      .editor-container {
+        flex-direction: column;
+      }
+      .editor-panel, .preview-panel {
+        height: 50vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <div class="file-list">
+        <h3>Файлы</h3>
+        <div id="fileList"></div>
+      </div>
+      <div class="file-actions">
+        <button id="newFileBtn">Новый файл</button>
+        <button id="saveFileBtn" disabled>Сохранить</button>
+        <button id="deleteFileBtn" disabled>Удалить</button>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="toolbar">
+        <div class="file-input-container">
+          <input type="file" id="fileInput" accept=".md,.txt" />
+          <label for="fileInput">📁 Выбрать файл</label>
+        </div>
+        <button id="togglePreviewBtn">Скрыть предпросмотр</button>
+        <button id="exportHtmlBtn">Экспорт HTML</button>
+        <button id="exportTxtBtn">Экспорт TXT</button>
+        <div style="flex: 1;"></div>
+        <span id="currentFileName">demo.md</span>
+        <span id="unsavedIndicator" style="color: #ff6b6b; display: none;">●</span>
+      </div>
+
+      <div class="editor-container">
+        <div class="editor-panel">
+          <div class="editor-header">Markdown</div>
+          <textarea id="editor" class="editor" placeholder="Введите Markdown текст здесь..."></textarea>
+        </div>
+        <div class="preview-panel" id="previewPanel">
+          <div class="preview-header">Предпросмотр</div>
+          <div id="preview" class="preview"></div>
+        </div>
+      </div>
+
+      <div class="status-bar">
+        <span id="statusText">Готово</span>
+        <span id="wordCount">0 слов</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal для нового файла -->
+  <div id="newFileModal" class="modal">
+    <div class="modal-content">
+      <h3>Создать новый файл</h3>
+      <input type="text" id="newFileName" placeholder="Имя файла (без .md)" />
+      <div class="buttons">
+        <button class="secondary" onclick="closeModal()">Отмена</button>
+        <button class="primary" onclick="createNewFile()">Создать</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentFile = 'demo.md';
+    let isModified = false;
+    let previewVisible = true;
+
+    // Инициализация
+    document.addEventListener('DOMContentLoaded', function() {
+      loadFileList();
+      loadFile(currentFile);
+      setupEventListeners();
+      updatePreview();
+    });
+
+    // Настройка обработчиков событий
+    function setupEventListeners() {
+      // Редактор
+      document.getElementById('editor').addEventListener('input', function() {
+        isModified = true;
+        updateUnsavedIndicator();
+        updatePreview();
+        updateWordCount();
+      });
+
+      // Кнопки
+      document.getElementById('newFileBtn').addEventListener('click', () => showNewFileModal());
+      document.getElementById('saveFileBtn').addEventListener('click', () => saveCurrentFile());
+      document.getElementById('deleteFileBtn').addEventListener('click', () => deleteCurrentFile());
+      document.getElementById('togglePreviewBtn').addEventListener('click', () => togglePreview());
+      document.getElementById('exportHtmlBtn').addEventListener('click', () => exportFile('html'));
+      document.getElementById('exportTxtBtn').addEventListener('click', () => exportFile('txt'));
+
+      // Выбор файла
+      document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+
+      // Drag and drop
+      const editor = document.getElementById('editor');
+      const main = document.querySelector('.main');
+
+      ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        main.addEventListener(eventName, preventDefaults, false);
+        editor.addEventListener(eventName, preventDefaults, false);
+      });
+
+      ['dragenter', 'dragover'].forEach(eventName => {
+        main.addEventListener(eventName, highlight, false);
+        editor.addEventListener(eventName, highlight, false);
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        main.addEventListener(eventName, unhighlight, false);
+        editor.addEventListener(eventName, unhighlight, false);
+      });
+
+      main.addEventListener('drop', handleDrop, false);
+      editor.addEventListener('drop', handleDrop, false);
+
+      // Горячие клавиши
+      document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey || e.metaKey) {
+          switch(e.key) {
+            case 's':
+              e.preventDefault();
+              saveCurrentFile();
+              break;
+            case 'n':
+              e.preventDefault();
+              showNewFileModal();
+              break;
+          }
+        }
+      });
+    }
+
+    // Загрузка списка файлов
+    async function loadFileList() {
+      try {
+        const response = await fetch('/api/files');
+        const files = await response.json();
+        const fileList = document.getElementById('fileList');
+        fileList.innerHTML = '';
+
+        files.forEach(file => {
+          const fileItem = document.createElement('div');
+          fileItem.className = 'file-item' + (file === currentFile ? ' active' : '');
+          fileItem.textContent = file;
+          fileItem.onclick = () => switchFile(file);
+          fileList.appendChild(fileItem);
+        });
+      } catch (error) {
+        console.error('Ошибка загрузки списка файлов:', error);
+      }
+    }
+
+    // Загрузка файла
+    async function loadFile(filename) {
+      try {
+        const response = await fetch(`/api/file/${filename}`);
+        const data = await response.json();
+
+        if (data.success) {
+          document.getElementById('editor').value = data.content;
+          document.getElementById('currentFileName').textContent = filename;
+          currentFile = filename;
+          isModified = false;
+          updateUnsavedIndicator();
+          updatePreview();
+          updateWordCount();
+          updateFileListSelection();
+          document.getElementById('saveFileBtn').disabled = false;
+          document.getElementById('deleteFileBtn').disabled = false;
+        } else {
+          showStatus('Ошибка загрузки файла: ' + data.error);
+        }
+      } catch (error) {
+        console.error('Ошибка загрузки файла:', error);
+        showStatus('Ошибка загрузки файла');
+      }
+    }
+
+    // Переключение файла
+    function switchFile(filename) {
+      if (isModified) {
+        if (!confirm('У вас есть несохранённые изменения. Продолжить без сохранения?')) {
+          return;
+        }
+      }
+      loadFile(filename);
+    }
+
+    // Сохранение файла
+    async function saveCurrentFile() {
+      const content = document.getElementById('editor').value;
+
+      try {
+        const response = await fetch(`/api/file/${currentFile}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ content: content })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          isModified = false;
+          updateUnsavedIndicator();
+          showStatus('Файл сохранён');
+          loadFileList(); // Обновить список файлов
+        } else {
+          showStatus('Ошибка сохранения: ' + data.error);
+        }
+      } catch (error) {
+        console.error('Ошибка сохранения файла:', error);
+        showStatus('Ошибка сохранения файла');
+      }
+    }
+
+    // Создание нового файла
+    async function createNewFile() {
+      const filename = document.getElementById('newFileName').value.trim();
+
+      if (!filename) {
+        alert('Введите имя файла');
+        return;
+      }
+
+      if (!filename.endsWith('.md')) {
+        filename += '.md';
+      }
+
+      try {
+        const response = await fetch('/api/new', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ filename: filename })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          closeModal();
+          document.getElementById('newFileName').value = '';
+          loadFileList();
+          loadFile(filename);
+          showStatus('Файл создан');
+        } else {
+          alert('Ошибка создания файла: ' + data.error);
+        }
+      } catch (error) {
+        console.error('Ошибка создания файла:', error);
+        alert('Ошибка создания файла');
+      }
+    }
+
+    // Удаление файла
+    async function deleteCurrentFile() {
+      if (!confirm(`Удалить файл "${currentFile}"?`)) {
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/file/${currentFile}`, {
+          method: 'DELETE'
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          showStatus('Файл удалён');
+          loadFileList();
+          // Загрузить первый файл из списка или создать новый
+          const files = await (await fetch('/api/files')).json();
+          if (files.length > 0) {
+            loadFile(files[0]);
+          } else {
+            createNewFileFromScratch();
+          }
+        } else {
+          showStatus('Ошибка удаления: ' + data.error);
+        }
+      } catch (error) {
+        console.error('Ошибка удаления файла:', error);
+        showStatus('Ошибка удаления файла');
+      }
+    }
+
+    // Создание нового файла без модального окна
+    function createNewFileFromScratch() {
+      document.getElementById('editor').value = '# Новый документ\n\nВведите ваш текст здесь...';
+      document.getElementById('currentFileName').textContent = 'untitled.md';
+      currentFile = 'untitled.md';
+      isModified = true;
+      updateUnsavedIndicator();
+      updatePreview();
+      updateWordCount();
+      document.getElementById('saveFileBtn').disabled = true;
+      document.getElementById('deleteFileBtn').disabled = true;
+    }
+
+    // Обновление предпросмотра
+    function updatePreview() {
+      const markdown = document.getElementById('editor').value;
+      const html = marked.parse(markdown);
+      document.getElementById('preview').innerHTML = html;
+
+      // Применить Prism.js к коду
+      setTimeout(() => {
+        Prism.highlightAll();
+      }, 10);
+    }
+
+    // Переключение предпросмотра
+    function togglePreview() {
+      const previewPanel = document.getElementById('previewPanel');
+      const toggleBtn = document.getElementById('togglePreviewBtn');
+
+      if (previewVisible) {
+        previewPanel.style.display = 'none';
+        toggleBtn.textContent = 'Показать предпросмотр';
+        previewVisible = false;
+      } else {
+        previewPanel.style.display = 'flex';
+        toggleBtn.textContent = 'Скрыть предпросмотр';
+        previewVisible = true;
+      }
+    }
+
+    // Обновление индикатора несохранённых изменений
+    function updateUnsavedIndicator() {
+      const indicator = document.getElementById('unsavedIndicator');
+      indicator.style.display = isModified ? 'inline' : 'none';
+    }
+
+    // Обновление счётчика слов
+    function updateWordCount() {
+      const text = document.getElementById('editor').value;
+      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+      document.getElementById('wordCount').textContent = `${words} слов`;
+    }
+
+    // Обновление выделения в списке файлов
+    function updateFileListSelection() {
+      const fileItems = document.querySelectorAll('.file-item');
+      fileItems.forEach(item => {
+        item.classList.toggle('active', item.textContent === currentFile);
+      });
+    }
+
+    // Показ статуса
+    function showStatus(message) {
+      document.getElementById('statusText').textContent = message;
+      setTimeout(() => {
+        document.getElementById('statusText').textContent = 'Готово';
+      }, 3000);
+    }
+
+    // Модальное окно
+    function showNewFileModal() {
+      document.getElementById('newFileModal').classList.add('show');
+      document.getElementById('newFileName').focus();
+    }
+
+    function closeModal() {
+      document.getElementById('newFileModal').classList.remove('show');
+    }
+
+    // Закрытие модального окна по клику вне его
+    document.getElementById('newFileModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+
+    // Закрытие модального окна по Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+
+    // Экспорт файла
+    async function exportFile(format) {
+      try {
+        const response = await fetch(`/api/export/${currentFile}/${format}`);
+        if (!response.ok) {
+          const errorData = await response.json();
+          showStatus('Ошибка экспорта: ' + (errorData.error || 'Неизвестная ошибка'));
+          return;
+        }
+
+        // Создать blob и скачать файл
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+
+        // Определить имя файла
+        const extension = format === 'html' ? 'html' : 'txt';
+        const filename = currentFile.replace('.md', `.${extension}`);
+        a.download = filename;
+
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+
+        showStatus(`Файл экспортирован как ${filename}`);
+      } catch (error) {
+        console.error('Ошибка экспорта файла:', error);
+        showStatus('Ошибка экспорта файла');
+      }
+    }
+
+    // Обработка выбора файла
+    function handleFileSelect(e) {
+      const file = e.target.files[0];
+      if (file) {
+        loadLocalFile(file);
+      }
+    }
+
+    // Загрузка локального файла
+    function loadLocalFile(file) {
+      if (!file.name.endsWith('.md') && !file.name.endsWith('.txt')) {
+        alert('Пожалуйста, выберите файл с расширением .md или .txt');
+        return;
+      }
+
+      if (isModified) {
+        if (!confirm('У вас есть несохранённые изменения. Продолжить без сохранения?')) {
+          return;
+        }
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const content = e.target.result;
+        document.getElementById('editor').value = content;
+        document.getElementById('currentFileName').textContent = file.name;
+        currentFile = file.name;
+        isModified = false;
+        updateUnsavedIndicator();
+        updatePreview();
+        updateWordCount();
+        document.getElementById('saveFileBtn').disabled = true;
+        document.getElementById('deleteFileBtn').disabled = true;
+        showStatus(`Файл "${file.name}" загружен`);
+      };
+
+      reader.onerror = function() {
+        showStatus('Ошибка чтения файла');
+      };
+
+      reader.readAsText(file);
+    }
+
+    // Drag and drop функции
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    function highlight(e) {
+      const main = document.querySelector('.main');
+      main.style.background = '#2a2a2a';
+      main.style.border = '2px dashed #0e639c';
+    }
+
+    function unhighlight(e) {
+      const main = document.querySelector('.main');
+      main.style.background = '';
+      main.style.border = '';
+    }
+
+    function handleDrop(e) {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+
+      if (files.length > 0) {
+        const file = files[0];
+        if (file.name.endsWith('.md') || file.name.endsWith('.txt')) {
+          loadLocalFile(file);
+        } else {
+          showStatus('Пожалуйста, перетащите файл с расширением .md или .txt');
+        }
+      }
+    }
+  </script>
+</body>
+</html>

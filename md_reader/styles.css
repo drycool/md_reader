@@ -1,0 +1,31 @@
+/* styles.css */
+Screen {
+    background: $surface;
+}
+
+Tree {
+    background: $panel;
+    border: tall $primary;
+}
+
+Tree :focus {
+    background: $accent;
+}
+
+Static {
+    background: $surface;
+    color: $text;
+    padding: 1 2;
+}
+
+Header {
+    background: $primary;
+    color: $text;
+    text-style: bold;
+}
+
+Footer {
+    background: $primary;
+    color: $text;
+    text-style: bold;
+}

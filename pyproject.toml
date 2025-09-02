@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "md-reader"
+version = "0.1.0"
+description = "Interactive CLI viewer for Markdown documentation"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{ name = "Ваше Имя", email = "you@example.com" }]
+
+# ← основные зависимости пакета
+dependencies = [
+  "textual>=0.59",
+  "typer>=0.12",
+  "rich>=13.7",
+  "markdown-it-py>=3.0",
+  "python-Levenshtein>=0.24",
+]
+
+[project.optional-dependencies]
+dev = [
+    "textual-dev",      # hot-reload: textual run src/md_reader
+    "pytest>=7.0",      # Тестирование
+    "pytest-cov>=4.0",  # Покрытие кода
+    "black>=23.0",      # Форматирование кода
+    "flake8>=6.0",      # Линтинг
+    "mypy>=1.0",        # Проверка типов
+    "pre-commit>=3.0",  # Pre-commit hooks
+    "bandit>=1.7",      # Проверка безопасности
+]
+
+
+
+[project.scripts]
+md-viewer = "md_reader.cli:app"
