@@ -1,94 +1,42 @@
 @echo off
 chcp 65001 >nul
-echo ========================================
-echo  Расширенная сборка MarkdownEditor.exe
-echo ========================================
-echo.
+title Build MarkdownReader
 
-:: Проверка окружения
-python --version >nul 2>&1
-if errorlevel 1 (
-    echo ОШИБКА: Python не найден.
+cd /d "%~dp0web_editor"
+
+if not exist "md_reader_exe.py" (
+    echo ERROR: md_reader_exe.py not found in web_editor folder
     pause
     exit /b 1
 )
 
-echo Обновление pip и setuptools...
-python -m pip install --upgrade pip setuptools wheel
+echo ========================================
+echo   Building MarkdownReader EXE
+echo ========================================
+echo.
 
-echo Установка зависимостей...
-pip install -r requirements.txt
+echo Installing dependencies...
+py -m pip install pyinstaller flask markdown --quiet 2>nul
 
 echo.
-echo Сборка с расширенными параметрами...
-
-:: Расширенная сборка с максимальными настройками
-pyinstaller --onefile ^
-    --windowed ^
-    --name=MarkdownEditor ^
-    --add-data="templates;templates" ^
-    --add-data="static;static" ^
-    --hidden-import=flask ^
-    --hidden-import=werkzeug ^
-    --hidden-import=jinja2 ^
-    --hidden-import=markupsafe ^
-    --hidden-import=itsdangerous ^
-    --hidden-import=click ^
-    --hidden-import=blinker ^
-    --hidden-import=threading ^
-    --hidden-import=socket ^
-    --hidden-import=webbrowser ^
-    --hidden-import=pathlib ^
-    --hidden-import=multiprocessing ^
-    --collect-submodules=flask ^
-    --collect-submodules=werkzeug ^
-    --collect-all=flask ^
-    --copy-metadata=flask ^
-    --copy-metadata=werkzeug ^
-    --copy-metadata=jinja2 ^
-    --exclude-module=tkinter ^
-    --exclude-module=matplotlib ^
-    --exclude-module=numpy ^
-    --exclude-module=pandas ^
-    --upx-dir=. ^
-    --clean ^
-    app.py
+echo Building EXE...
+py -m PyInstaller --onefile --console --name "MarkdownReader" md_reader_exe.py
 
 if errorlevel 1 (
-    echo.
-    echo Расширенная сборка не удалась. Пробуем базовую...
-    
-    :: Fallback к простой сборке
-    pyinstaller --onefile ^
-        --name=MarkdownEditor ^
-        --add-data="templates;templates" ^
-        --add-data="static;static" ^
-        app.py
-        
-    if errorlevel 1 (
-        echo ОШИБКА: Все попытки сборки не удались.
-        pause
-        exit /b 1
-    )
+    echo Build failed!
+    pause
+    exit /b 1
 )
 
-if exist "dist\MarkdownEditor.exe" (
+if exist "dist\MarkdownReader.exe" (
     echo.
-    echo ========================================
-    echo        СБОРКА ЗАВЕРШЕНА УСПЕШНО!
-    echo ========================================
+    echo Copying to project root...
+    copy /Y "dist\MarkdownReader.exe" "..\MarkdownReader.exe"
     echo.
-    echo Размер файла:
-    for %%F in ("dist\MarkdownEditor.exe") do echo %%~zF байт
-    echo.
-    echo Файл: dist\MarkdownEditor.exe
-    echo.
+    echo DONE: MarkdownReader.exe created!
 ) else (
-    echo ОШИБКА: EXE файл не создан.
+    echo ERROR: EXE not found!
 )
 
-echo Очистка...
-if exist "build" rmdir /s /q "build"
-if exist "MarkdownEditor.spec" del "MarkdownEditor.spec"
-
+echo.
 pause

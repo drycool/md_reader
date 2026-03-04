@@ -1,25 +1,5 @@
-# Веб-редактор Markdown - Зависимости
-# Web Markdown Editor - Dependencies
-
-# Основные зависимости Flask
 Flask==2.3.3
 Werkzeug==2.3.7
 Jinja2==3.1.2
 MarkupSafe==2.1.3
-
-# Зависимости md_reader (переиспользуем существующие модули)
-textual>=0.59.0
-typer>=0.12.0
-rich>=13.7.0
-markdown-it-py>=3.0.0
-python-Levenshtein>=0.24.0
-
-# Дополнительные зависимости для веб-версии
-mdit-py-plugins>=0.4.0  # Дополнительные плагины для Markdown
-Pygments>=2.16.0        # Подсветка синтаксиса
-watchdog>=3.0.0         # Мониторинг файлов (для hot reload)
-python-dotenv>=1.0.0    # Переменные окружения
-
-# Опциональные зависимости для production
-gunicorn>=21.2.0        # WSGI сервер для production
-eventlet>=0.33.0        # Асинхронный сервер
+markdown>=4.0.0

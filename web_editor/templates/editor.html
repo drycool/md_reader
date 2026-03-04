@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - Markdown Editor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-editor: #1e1e1e;
+            --text-primary: #1a1a2e;
+            --text-secondary: #6b7280;
+            --text-editor: #d4d4d4;
+            --accent: #4f46e5;
+            --accent-hover: #4338ca;
+            --border: #e5e7eb;
+            --toolbar-height: 56px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .header {
+            height: var(--toolbar-height);
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .file-title {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .unsaved-dot {
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 50%;
+            display: none;
+        }
+
+        .unsaved-dot.visible { display: block; }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+        }
+
+        .btn-ghost:hover {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .main {
+            display: flex;
+            height: calc(100vh - var(--toolbar-height));
+            margin-top: var(--toolbar-height);
+        }
+
+        .editor-pane {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-editor);
+        }
+
+        .editor-toolbar {
+            display: flex;
+            gap: 4px;
+            padding: 8px 16px;
+            background: #252526;
+            border-bottom: 1px solid #333;
+        }
+
+        .tool-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            color: #888;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+        }
+
+        .tool-btn:hover {
+            background: #3c3c3c;
+            color: #fff;
+        }
+
+        .editor {
+            flex: 1;
+            width: 100%;
+            padding: 20px;
+            background: var(--bg-editor);
+            color: var(--text-editor);
+            border: none;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            resize: none;
+            outline: none;
+        }
+
+        .preview-pane {
+            flex: 1;
+            border-left: 1px solid var(--border);
+            overflow-y: auto;
+            padding: 30px 40px;
+            background: var(--bg-primary);
+        }
+
+        .markdown-body h1 { font-size: 28px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+        .markdown-body h2 { font-size: 22px; font-weight: 600; margin: 28px 0 14px; }
+        .markdown-body h3 { font-size: 18px; font-weight: 600; margin: 20px 0 10px; }
+        .markdown-body h4 { font-size: 16px; font-weight: 600; margin: 16px 0 8px; }
+        .markdown-body p { line-height: 1.7; margin: 14px 0; color: #374151; }
+        .markdown-body a { color: var(--accent); text-decoration: none; }
+        .markdown-body code { background: var(--bg-secondary); padding: 2px 6px; border-radius: 4px; font-family: 'Fira Code', monospace; font-size: 0.9em; color: #dc2626; }
+        .markdown-body pre { background: #1f2937; color: #f3f4f6; padding: 14px; border-radius: 6px; overflow-x: auto; margin: 14px 0; }
+        .markdown-body pre code { background: none; color: inherit; padding: 0; }
+        .markdown-body blockquote { border-left: 3px solid var(--accent); margin: 14px 0; padding: 10px 16px; background: var(--bg-secondary); color: var(--text-secondary); }
+        .markdown-body ul, .markdown-body ol { margin: 14px 0; padding-left: 22px; }
+        .markdown-body li { margin: 6px 0; line-height: 1.6; }
+        .markdown-body table { width: 100%; border-collapse: collapse; margin: 14px 0; }
+        .markdown-body th, .markdown-body td { padding: 10px; border: 1px solid var(--border); }
+        .markdown-body th { background: var(--bg-secondary); font-weight: 600; }
+        .markdown-body img { max-width: 100%; border-radius: 6px; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <span class="file-title">{{ title }}</span>
+            <span class="unsaved-dot" id="unsavedDot"></span>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-ghost" id="newBtn" title="Новый файл">
+                <i class="fas fa-plus"></i> Новый
+            </button>
+            <button class="btn btn-ghost" id="openBtn" title="Открыть файл">
+                <i class="fas fa-folder-open"></i> Открыть
+            </button>
+            <button class="btn btn-success" id="saveBtn" title="Сохранить">
+                <i class="fas fa-save"></i> Сохранить
+            </button>
+            <button class="btn btn-ghost" id="viewBtn" title="Режим просмотра">
+                <i class="fas fa-eye"></i> Просмотр
+            </button>
+        </div>
+    </header>
+
+    <input type="file" id="fileInput" accept=".md,.txt" style="display: none;">
+
+    <main class="main">
+        <div class="editor-pane">
+            <div class="editor-toolbar">
+                <button class="tool-btn" data-action="bold" title="Жирный"><i class="fas fa-bold"></i></button>
+                <button class="tool-btn" data-action="italic" title="Курсив"><i class="fas fa-italic"></i></button>
+                <button class="tool-btn" data-action="heading" title="Заголовок"><i class="fas fa-heading"></i></button>
+                <button class="tool-btn" data-action="link" title="Ссылка"><i class="fas fa-link"></i></button>
+                <button class="tool-btn" data-action="code" title="Код"><i class="fas fa-code"></i></button>
+                <button class="tool-btn" data-action="list" title="Список"><i class="fas fa-list-ul"></i></button>
+                <button class="tool-btn" data-action="quote" title="Цитата"><i class="fas fa-quote-right"></i></button>
+            </div>
+            <textarea class="editor" id="editor">{{ content }}</textarea>
+        </div>
+        <div class="preview-pane">
+            <div class="markdown-body" id="preview"></div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <script>
+        const editor = document.getElementById('editor');
+        const preview = document.getElementById('preview');
+        const filePath = '{{ file_path }}';
+        let originalContent = '{{ content }}';
+        let hasChanges = false;
+
+        function updatePreview() {
+            try {
+                preview.innerHTML = marked.parse(editor.value);
+            } catch (e) {
+                preview.innerHTML = '<p style="color:red">Ошибка: ' + e.message + '</p>';
+            }
+            checkChanges();
+        }
+
+        function checkChanges() {
+            hasChanges = editor.value !== originalContent;
+            document.getElementById('unsavedDot').classList.toggle('visible', hasChanges);
+        }
+
+        editor.addEventListener('input', () => {
+            updatePreview();
+            sessionStorage.setItem('md_content', editor.value);
+            sessionStorage.setItem('md_path', filePath);
+        });
+
+        updatePreview();
+
+        // Toolbar actions
+        const actions = {
+            bold: { prefix: '**', suffix: '**', placeholder: 'текст' },
+            italic: { prefix: '*', suffix: '*', placeholder: 'текст' },
+            heading: { prefix: '\n## ', suffix: '', placeholder: 'Заголовок' },
+            link: { prefix: '[', suffix: '](url)', placeholder: 'текст' },
+            code: { prefix: '`', suffix: '`', placeholder: 'код' },
+            list: { prefix: '\n- ', suffix: '', placeholder: 'пункт' },
+            quote: { prefix: '\n> ', suffix: '', placeholder: 'цитата' }
+        };
+
+        document.querySelectorAll('.tool-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const action = actions[btn.dataset.action];
+                if (!action) return;
+
+                const start = editor.selectionStart;
+                const end = editor.selectionEnd;
+                const text = editor.value;
+                const selected = text.substring(start, end) || action.placeholder;
+
+                const newText = text.substring(0, start) + action.prefix + selected + action.suffix + text.substring(end);
+                editor.value = newText;
+                editor.focus();
+                updatePreview();
+            });
+        });
+
+        // Save
+        document.getElementById('saveBtn').addEventListener('click', () => {
+            if (!filePath) {
+                alert('Нельзя сохранить: путь к файлу не указан');
+                return;
+            }
+            fetch('/api/save', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ path: filePath, content: editor.value })
+            }).then(r => r.json()).then(data => {
+                if (data.success) {
+                    originalContent = editor.value;
+                    checkChanges();
+                    alert('Сохранено!');
+                } else {
+                    alert('Ошибка: ' + data.error);
+                }
+            });
+        });
+
+        // View mode - return to viewer
+        document.getElementById('viewBtn').addEventListener('click', () => {
+            if (hasChanges) {
+                if (!confirm('Есть несохранённые изменения. Перейти в режим просмотра?')) {
+                    return;
+                }
+            }
+            if (filePath) {
+                window.location.href = '/view?file=' + encodeURIComponent(filePath) + '&modified=1';
+            } else {
+                window.location.href = '/';
+            }
+        });
+
+        // New file
+        document.getElementById('newBtn').addEventListener('click', () => {
+            if (hasChanges) {
+                if (!confirm('Есть несохранённые изменения. Создать новый файл?')) {
+                    return;
+                }
+            }
+            editor.value = '';
+            originalContent = '';
+            checkChanges();
+            window.location.href = '/edit';
+        });
+
+        // Open file
+        document.getElementById('openBtn').addEventListener('click', () => {
+            document.getElementById('fileInput').click();
+        });
+
+        document.getElementById('fileInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    window.location.href = '/edit?temp=1&name=' + encodeURIComponent(file.name);
+                    sessionStorage.setItem('temp_md_content', event.target.result);
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // Load temp content if exists
+        const tempContent = sessionStorage.getItem('temp_md_content');
+        if (tempContent && !'{{ content }}') {
+            editor.value = tempContent;
+            updatePreview();
+        }
+    </script>
+</body>
+</html>

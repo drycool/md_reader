@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - Markdown Viewer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #1a1a2e;
+            --text-secondary: #6b7280;
+            --accent: #4f46e5;
+            --accent-hover: #4338ca;
+            --border: #e5e7eb;
+            --sidebar-width: 260px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .header {
+            height: 56px;
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .file-title {
+            font-size: 16px;
+            font-weight: 600;
+            max-width: 400px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .modified-badge {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+        }
+
+        .btn-ghost:hover {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .main {
+            display: flex;
+            height: calc(100vh - 56px);
+            margin-top: 56px;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            padding: 20px 0;
+            flex-shrink: 0;
+            display: none;
+        }
+
+        .sidebar.visible { display: block; }
+
+        .sidebar-header {
+            padding: 0 20px 16px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+        }
+
+        .toc-list { list-style: none; }
+
+        .toc-item {
+            padding: 8px 20px;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--text-secondary);
+            border-left: 2px solid transparent;
+            transition: all 0.15s ease;
+        }
+
+        .toc-item:hover {
+            background: rgba(79, 70, 229, 0.05);
+            color: var(--text-primary);
+        }
+
+        .toc-item.active {
+            background: rgba(79, 70, 229, 0.08);
+            color: var(--accent);
+            border-left-color: var(--accent);
+            font-weight: 500;
+        }
+
+        .toc-item.level-1 { padding-left: 20px; font-weight: 500; }
+        .toc-item.level-2 { padding-left: 32px; font-size: 12px; }
+        .toc-item.level-3 { padding-left: 44px; font-size: 12px; }
+        .toc-item.level-4 { padding-left: 56px; font-size: 12px; }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px 60px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .markdown-body h1 { font-size: 32px; font-weight: 700; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+        .markdown-body h2 { font-size: 24px; font-weight: 600; margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+        .markdown-body h3 { font-size: 20px; font-weight: 600; margin: 24px 0 12px; }
+        .markdown-body h4 { font-size: 16px; font-weight: 600; margin: 20px 0 8px; }
+        .markdown-body p { line-height: 1.7; margin: 16px 0; color: #374151; }
+        .markdown-body a { color: var(--accent); text-decoration: none; }
+        .markdown-body a:hover { text-decoration: underline; }
+        .markdown-body code { background: var(--bg-secondary); padding: 2px 6px; border-radius: 4px; font-family: 'Fira Code', monospace; font-size: 0.9em; color: #dc2626; }
+        .markdown-body pre { background: #1f2937; color: #f3f4f6; padding: 16px; border-radius: 8px; overflow-x: auto; margin: 16px 0; }
+        .markdown-body pre code { background: none; color: inherit; padding: 0; }
+        .markdown-body blockquote { border-left: 4px solid var(--accent); margin: 16px 0; padding: 12px 20px; background: var(--bg-secondary); color: var(--text-secondary); }
+        .markdown-body ul, .markdown-body ol { margin: 16px 0; padding-left: 24px; }
+        .markdown-body li { margin: 8px 0; line-height: 1.6; }
+        .markdown-body table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+        .markdown-body th, .markdown-body td { padding: 12px; border: 1px solid var(--border); text-align: left; }
+        .markdown-body th { background: var(--bg-secondary); font-weight: 600; }
+        .markdown-body img { max-width: 100%; border-radius: 8px; margin: 16px 0; }
+        .markdown-body hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+        .help-panel {
+            display: none;
+            position: fixed;
+            top: 56px; right: 0; bottom: 0;
+            width: 400px;
+            background: var(--bg-primary);
+            border-left: 1px solid var(--border);
+            overflow-y: auto;
+            z-index: 50;
+            padding: 24px;
+        }
+
+        .help-panel.visible { display: block; }
+        .help-panel h2 { font-size: 20px; margin-bottom: 20px; }
+        .help-section { margin-bottom: 24px; }
+        .help-section h3 { font-size: 14px; font-weight: 600; color: var(--text-secondary); margin-bottom: 12px; text-transform: uppercase; }
+        .help-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); }
+        .help-item code { background: var(--bg-secondary); padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <span class="file-title">{{ title }}</span>
+            {% if modified %}
+            <span class="modified-badge">Изменено</span>
+            {% endif %}
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-ghost" id="toggleToc" title="Оглавление">
+                <i class="fas fa-list"></i>
+            </button>
+            <button class="btn btn-ghost" id="helpBtn" title="Справка">
+                <i class="fas fa-question-circle"></i>
+            </button>
+            <button class="btn btn-primary" id="editBtn">
+                <i class="fas fa-edit"></i> Редактировать
+            </button>
+        </div>
+    </header>
+
+    <main class="main">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">Оглавление</div>
+            <ul class="toc-list" id="tocList"></ul>
+        </aside>
+
+        <div class="content">
+            <div class="markdown-body" id="content">
+                {{ content|safe }}
+            </div>
+        </div>
+    </main>
+
+    <div class="help-panel" id="helpPanel">
+        <h2>Справка по Markdown</h2>
+        <div class="help-section">
+            <h3>Заголовки</h3>
+            <div class="help-item"><span>Заголовок 1</span><code># Текст</code></div>
+            <div class="help-item"><span>Заголовок 2</span><code>## Текст</code></div>
+            <div class="help-item"><span>Заголовок 3</span><code>### Текст</code></div>
+        </div>
+        <div class="help-section">
+            <h3>Форматирование</h3>
+            <div class="help-item"><span>Жирный</span><code>**текст**</code></div>
+            <div class="help-item"><span>Курсив</span><code>*текст*</code></div>
+            <div class="help-item"><span>Код</span><code>`код`</code></div>
+            <div class="help-item"><span>Зачёркнутый</span><code>~~текст~~</code></div>
+        </div>
+        <div class="help-section">
+            <h3>Списки</h3>
+            <div class="help-item"><span>Маркированный</span><code>- пункт</code></div>
+            <div class="help-item"><span>Нумерованный</span><code>1. пункт</code></div>
+        </div>
+        <div class="help-section">
+            <h3>Ссылки и изображения</h3>
+            <div class="help-item"><span>Ссылка</span><code>[текст](url)</code></div>
+            <div class="help-item"><span>Изображение</span><code>![alt](url)</code></div>
+        </div>
+        <div class="help-section">
+            <h3>Код</h3>
+            <div class="help-item"><span>Блок кода</span><code>```язык</code></div>
+        </div>
+        <div class="help-section">
+            <h3>Прочее</h3>
+            <div class="help-item"><span>Цитата</span><code>> текст</code></div>
+            <div class="help-item"><span>Горизонтальная линия</span><code>---</code></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <script>
+        const contentEl = document.getElementById('content');
+        const tocList = document.getElementById('tocList');
+        const sidebar = document.getElementById('sidebar');
+        const helpPanel = document.getElementById('helpPanel');
+        const filePath = '{{ file_path }}';
+
+        function buildToc() {
+            const headers = contentEl.querySelectorAll('h1, h2, h3, h4');
+            let tocHtml = '';
+
+            headers.forEach((header, index) => {
+                const level = parseInt(header.tagName[1]);
+                const id = 'heading-' + index;
+                header.id = id;
+
+                tocHtml += `<li class="toc-item level-${level}" data-target="${id}">
+                    ${header.textContent}
+                </li>`;
+            });
+
+            tocList.innerHTML = tocHtml;
+
+            document.querySelectorAll('.toc-item').forEach(function(item) {
+                item.addEventListener('click', function() {
+                    const target = document.getElementById(item.dataset.target);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        }
+
+        function highlightCurrentSection() {
+            const headers = contentEl.querySelectorAll('h1, h2, h3, h4');
+            let current = '';
+
+            headers.forEach(function(header) {
+                const rect = header.getBoundingClientRect();
+                if (rect.top <= 100) {
+                    current = header.id;
+                }
+            });
+
+            document.querySelectorAll('.toc-item').forEach(function(item) {
+                item.classList.toggle('active', item.dataset.target === current);
+            });
+        }
+
+        document.getElementById('toggleToc').addEventListener('click', function() {
+            sidebar.classList.toggle('visible');
+        });
+
+        document.getElementById('helpBtn').addEventListener('click', function() {
+            helpPanel.classList.toggle('visible');
+        });
+
+        document.getElementById('editBtn').addEventListener('click', function() {
+            window.location.href = '/edit?file=' + encodeURIComponent(filePath) + '&from=view';
+        });
+
+        window.addEventListener('scroll', highlightCurrentSection);
+        buildToc();
+    </script>
+</body>
+</html>
