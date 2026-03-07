@@ -1,2 +1,27 @@
-# created by virtualenv automatically
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
 
+# Logs
+*.log
+app_debug.log
+md_reader.log
+
+# Temp
+temp_cache/
+*.md.tmp
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
