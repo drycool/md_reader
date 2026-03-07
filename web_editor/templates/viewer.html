@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }} - Markdown Viewer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>{{ title if title and title != 'Без названия' and not title.startswith('Ошибка') else 'Ошибка: Документ не найден' }} - Markdown Viewer</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
     <style>
         :root {
             --bg-primary: #ffffff;
@@ -231,7 +232,7 @@
         </aside>
 
         <div class="content">
-            <div class="markdown-body" id="content">
+            <div class="markdown-body" id="content" data-raw-content="{{ raw_content|escape }}">
                 {{ content|safe }}
             </div>
         </div>
@@ -273,8 +274,29 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <script src="{{ url_for('static', filename='js/marked.min.js') }}"></script>
     <script>
+        // ===== ОТЛАДОЧНЫЙ БЛОК =====
+        console.log('=== [VIEWER] Page loaded ===');
+        console.log('[VIEWER] Title from Flask:', '{{ title }}');
+        console.log('[VIEWER] Content length:', '{{ content|length }}');
+        console.log('[VIEWER] Raw content length:', '{{ raw_content|length }}');
+        console.log('[VIEWER] File path:', '{{ file_path }}');
+        console.log('[VIEWER] Modified:', '{{ modified }}');
+
+        // Проверка sessionStorage
+        console.log('[VIEWER] sessionStorage keys:', Object.keys(sessionStorage));
+
+        // Проверка на пустой контент
+        const contentLength = '{{ content|length }}';
+        const title = '{{ title }}';
+        if (contentLength === '0' || title.includes('Ошибка') || title.includes('Без названия')) {
+            console.error('[VIEWER] ERROR: Empty or error content detected!');
+            // Добавляем красное сообщение об ошибке в DOM
+            document.body.innerHTML = '<div style="padding: 40px; color: #dc2626; background: #fef2f2; min-height: 100vh;"><h2>Ошибка: Контент не получен от сервера</h2><pre style="background: #fff; padding: 20px; border-radius: 8px; margin-top: 20px;">Check console for details. See app_debug.log for server logs.</pre></div>';
+        }
+        // ===== КОНЕЦ ОТЛАДОЧНОГО БЛОКА =====
+
         const contentEl = document.getElementById('content');
         const tocList = document.getElementById('tocList');
         const sidebar = document.getElementById('sidebar');
@@ -332,7 +354,22 @@
         });
 
         document.getElementById('editBtn').addEventListener('click', function() {
-            window.location.href = '/edit?file=' + encodeURIComponent(filePath) + '&from=view';
+            // Получаем исходный markdown из data атрибута
+            const contentDiv = document.getElementById('content');
+            const markdownContent = contentDiv.dataset.rawContent || '';
+
+            // Сохраняем контент в session через API перед переходом
+            fetch('/api/set-temp-content', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    content: markdownContent,
+                    file_path: filePath
+                })
+            }).then(() => {
+                const fp = filePath.replace(/\\/g, '/');
+                window.location.href = '/edit?file=' + encodeURIComponent(fp) + '&from=view';
+            });
         });
 
         window.addEventListener('scroll', highlightCurrentSection);

@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} - Markdown Editor</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
         :root {
             --bg-primary: #ffffff;
@@ -240,13 +242,32 @@
         </div>
     </main>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <script src="{{ url_for('static', filename='js/marked.min.js') }}"></script>
     <script>
+        // ===== ОТЛАДОЧНЫЙ БЛОК =====
+        console.log('=== [EDITOR] Page loaded ===');
+        console.log('[EDITOR] Title from Flask:', '{{ title }}');
+        console.log('[EDITOR] Content length:', '{{ content|length }}');
+        console.log('[EDITOR] File path:', '{{ file_path }}');
+
+        // Проверка sessionStorage
+        console.log('[EDITOR] sessionStorage keys:', Object.keys(sessionStorage));
+
+        // Проверка на пустой контент
+        const contentLength = '{{ content|length }}';
+        const title = '{{ title }}';
+        if (contentLength === '0' || title.includes('Новый файл')) {
+            console.warn('[EDITOR] WARNING: Empty content or new file!');
+        }
+        // ===== КОНЕЦ ОТЛАДОЧНОГО БЛОКА =====
+
         const editor = document.getElementById('editor');
         const preview = document.getElementById('preview');
         const filePath = '{{ file_path }}';
-        let originalContent = '{{ content }}';
+        let originalContent = {{ content|tojson }};
         let hasChanges = false;
+
+        console.log('[EDITOR] originalContent length:', originalContent ? originalContent.length : 0);
 
         function updatePreview() {
             try {
@@ -327,7 +348,8 @@
                 }
             }
             if (filePath) {
-                window.location.href = '/view?file=' + encodeURIComponent(filePath) + '&modified=1';
+                const fp = filePath.replace(/\\/g, '/');
+                window.location.href = '/view?file=' + encodeURIComponent(fp) + '&modified=1';
             } else {
                 window.location.href = '/';
             }
@@ -363,12 +385,45 @@
             }
         });
 
-        // Load temp content if exists
-        const tempContent = sessionStorage.getItem('temp_md_content');
-        if (tempContent && !'{{ content }}') {
-            editor.value = tempContent;
+        // Load content: приоритет - Flask session (от view), затем файл, затем sessionStorage
+        const serverContent = {{ content|tojson }};
+        const tempFromFlask = {{ temp_content|tojson }};
+
+        console.log('[EDITOR] serverContent length:', serverContent ? serverContent.length : 0);
+        console.log('[EDITOR] tempFromFlask length:', tempFromFlask ? tempFromFlask.length : 0);
+
+        // Приоритет: 1) Flask session (от view), 2) контент файла, 3) sessionStorage
+        if (tempFromFlask && tempFromFlask !== '') {
+            editor.value = tempFromFlask;
+            originalContent = tempFromFlask;
+            console.log('[EDITOR] Using tempFromFlask');
             updatePreview();
+        } else if (serverContent && serverContent !== '') {
+            editor.value = serverContent;
+            originalContent = serverContent;
+            console.log('[EDITOR] Using serverContent');
+            updatePreview();
+        } else {
+            const tempContent = sessionStorage.getItem('temp_md_content');
+            if (tempContent) {
+                editor.value = tempContent;
+                originalContent = tempContent;
+                console.log('[EDITOR] Using sessionStorage');
+                updatePreview();
+            } else {
+                console.log('[EDITOR] No content found!');
+            }
         }
+
+        console.log('[EDITOR] Editor initialized with content length:', editor.value.length);
+
+        // Передача контента в Flask session при уходе со страницы
+        window.addEventListener('beforeunload', function() {
+            if (editor.value && filePath) {
+                navigator.sendBeacon('/api/set-temp-content',
+                    JSON.stringify({content: editor.value, file_path: filePath}));
+            }
+        });
     </script>
 </body>
 </html>
