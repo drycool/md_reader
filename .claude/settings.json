@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(taskkill:*)",
+      "Bash(C:/Users/369/AppData/Local/Programs/Python/Python313/python.exe:*)"
+    ]
+  },
+  "agents": {
+    "explore": {
+      "description": "Исследование кодовой базы, поиск файлов и кода"
+    },
+    "plan": {
+      "description": "Планирование реализации, архитектурные решения"
+    },
+    "general-purpose": {
+      "description": "Универсальный агент для сложных задач"
+    },
+    "statusline-setup": {
+      "description": "Настройка статусной строки Claude Code"
+    },
+    "claude-code-guide": {
+      "description": "Вопросы о Claude Code, API и SDK"
+    }
+  },
+  "hooks": {
+    "PreCommand": {
+      "matcher": ".*",
+      "hooks": {
+        "type": "command",
+        "command": "bash",
+        "args": [".claude/hooks/pre-command.bash"]
+      }
+    }
+  }
+}

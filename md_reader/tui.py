@@ -73,9 +73,6 @@ class DocBrowser(App):
         self._build_tree()
 
     # ---------- events ----------
-    def on_mount(self) -> None:
-        self._build_tree()
-
     def action_refresh(self) -> None:
         self.files = load_markdown_files(self.base)
         self.toc = build_toc(self.files)

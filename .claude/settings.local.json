@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(taskkill:*)",
+      "Bash(C:/Users/369/AppData/Local/Programs/Python/Python313/python.exe:*)",
+      "Bash(python:*)",
+      "Bash(D:/md_reader:*)",
+      "Bash(timeout 5 ./MarkdownReader.exe:*)",
+      "Bash(powershell:*)",
+      "Bash(curl:*)"
+    ]
+  }
+}

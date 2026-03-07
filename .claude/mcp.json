@@ -1,0 +1,13 @@
+{
+  // MCP Servers Configuration
+  // Добавляйте MCP серверы здесь
+  //
+  // Пример:
+  // "servers": {
+  //   "server-name": {
+  //     "command": "npx",
+  //     "args": ["-y", "@example/mcp-server"]
+  //   }
+  // }
+  "mcpServers": {}
+}
