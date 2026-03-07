@@ -1,0 +1,471 @@
+2026-03-07 15:26:44,650 - INFO - [__main__] TEMPLATE_FOLDER: D:\md_reader\web_editor\templates
+2026-03-07 15:26:44,650 - INFO - [__main__] STATIC_FOLDER: D:\md_reader\web_editor\static
+2026-03-07 15:26:44,650 - INFO - [__main__] STATIC_FOLDER exists: True
+2026-03-07 15:26:44,653 - INFO - [__main__] Starting MD Reader
+2026-03-07 15:28:46,855 - INFO - [__main__] TEMPLATE_FOLDER: D:\md_reader\web_editor\templates
+2026-03-07 15:28:46,856 - INFO - [__main__] STATIC_FOLDER: D:\md_reader\web_editor\static
+2026-03-07 15:28:46,856 - INFO - [__main__] STATIC_FOLDER exists: True
+2026-03-07 15:28:46,859 - INFO - [__main__] Starting MD Reader
+2026-03-07 15:28:46,859 - ERROR - [__main__] File not found: D:\md_reader\web_editor\demo.md
+2026-03-07 15:29:58,538 - INFO - [__main__] TEMPLATE_FOLDER: D:\md_reader\web_editor\templates
+2026-03-07 15:29:58,539 - INFO - [__main__] STATIC_FOLDER: D:\md_reader\web_editor\static
+2026-03-07 15:29:58,539 - INFO - [__main__] STATIC_FOLDER exists: True
+2026-03-07 15:29:58,542 - INFO - [__main__] Starting MD Reader
+2026-03-07 15:29:58,543 - INFO - [__main__] Server starting on port 56695
+2026-03-07 15:29:58,543 - INFO - [__main__] Opening browser: http://127.0.0.1:56695
+2026-03-07 15:29:58,556 - INFO - [werkzeug] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:56695
+2026-03-07 15:29:58,556 - INFO - [werkzeug] [33mPress CTRL+C to quit[0m
+2026-03-07 15:29:59,768 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 15:29:59] "GET / HTTP/1.1" 200 -
+2026-03-07 15:29:59,847 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 15:29:59] "GET /static/css/font-awesome.min.css HTTP/1.1" 200 -
+2026-03-07 15:29:59,848 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 15:29:59] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-03-07 15:29:59,892 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 15:29:59] "GET /static/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 -
+2026-03-07 15:29:59,903 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 15:29:59] "GET /static/favicon.ico HTTP/1.1" 200 -
+2026-03-07 15:30:05,141 - INFO - [__main__] [API] set-temp-content: session_id=unknown, content_len=3328, file_path='SPECIFICATION_RU.md'
+2026-03-07 15:30:05,141 - DEBUG - [__main__] [API] Session keys after set: ['temp_md_file_path', 'temp_md_name', 'temp_md_content']
+2026-03-07 15:30:05,142 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 15:30:05] "POST /api/set-temp-content HTTP/1.1" 200 -
+2026-03-07 15:30:05,151 - DEBUG - [__main__] [VIEW] Request received. Session ID: unknown
+2026-03-07 15:30:05,152 - DEBUG - [__main__] [VIEW] Request args: {'temp': '1'}
+2026-03-07 15:30:05,152 - DEBUG - [__main__] [VIEW] Temp mode - session content length: 3328
+2026-03-07 15:30:05,152 - DEBUG - [__main__] [VIEW] Session keys: ['temp_md_content', 'temp_md_file_path', 'temp_md_name']
+2026-03-07 15:30:05,210 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-03-07 15:30:05,212 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.footnotes.FootnoteExtension".
+2026-03-07 15:30:05,212 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.attr_list.AttrListExtension".
+2026-03-07 15:30:05,213 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.def_list.DefListExtension".
+2026-03-07 15:30:05,214 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-03-07 15:30:05,215 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.abbr.AbbrExtension".
+2026-03-07 15:30:05,215 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.md_in_html.MarkdownInHtmlExtension".
+2026-03-07 15:30:05,215 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.extra.ExtraExtension".
+2026-03-07 15:30:05,215 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2026-03-07 15:30:05,446 - INFO - [__main__] [VIEW] Rendered temp file, content length: 8357
+2026-03-07 15:30:05,452 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 15:30:05] "GET /view?temp=1 HTTP/1.1" 200 -
+2026-03-07 15:30:05,481 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 15:30:05] "[36mGET /static/css/font-awesome.min.css HTTP/1.1[0m" 304 -
+2026-03-07 15:30:05,484 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 15:30:05] "GET /static/js/marked.min.js HTTP/1.1" 200 -
+2026-03-07 15:30:07,246 - INFO - [__main__] [API] set-temp-content: session_id=unknown, content_len=3228, file_path=''
+2026-03-07 15:30:07,246 - DEBUG - [__main__] [API] Session keys after set: ['temp_md_content', 'temp_md_file_path', 'temp_md_name']
+2026-03-07 15:30:07,247 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 15:30:07] "POST /api/set-temp-content HTTP/1.1" 200 -
+2026-03-07 15:30:07,257 - DEBUG - [__main__] [EDIT] Request received. Session ID: unknown
+2026-03-07 15:30:07,257 - DEBUG - [__main__] [EDIT] Request args: {'file': '', 'from': 'view'}
+2026-03-07 15:30:07,257 - DEBUG - [__main__] [EDIT] Session keys: ['temp_md_content', 'temp_md_file_path', 'temp_md_name']
+2026-03-07 15:30:07,257 - DEBUG - [__main__] [EDIT] Raw file_path from request: ''
+2026-03-07 15:30:07,257 - DEBUG - [__main__] [EDIT] Resolved file_path: ''
+2026-03-07 15:30:07,257 - DEBUG - [__main__] [EDIT] No file path, using session content, length: 3228
+2026-03-07 15:30:07,257 - INFO - [__main__] [EDIT] Rendering editor. title='Новый файл', content_len=3228
+2026-03-07 15:30:07,263 - ERROR - [app] Exception on /edit [GET]
+Traceback (most recent call last):
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\md_reader\web_editor\app.py", line 249, in edit_file
+    return render_template('editor.html',
+        title=title,
+        content=content,
+        file_path=resolved_path or '')
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "D:\md_reader\web_editor\templates\editor.html", line 387, in template
+    const serverContent = '{{ content|escapejs }}';
+    ^^^^^^^^^^^^^^^^^
+jinja2.exceptions.TemplateAssertionError: No filter named 'escapejs'.
+2026-03-07 15:30:07,267 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 15:30:07] "[35m[1mGET /edit?file=&from=view HTTP/1.1[0m" 500 -
+2026-03-07 15:30:07,325 - WARNING - [__main__] [404] Path not found: /favicon.ico
+2026-03-07 15:30:07,326 - WARNING - [__main__] [404] Request URL: http://127.0.0.1:56695/favicon.ico
+2026-03-07 15:30:07,326 - WARNING - [__main__] [404] Static folder: D:\md_reader\web_editor\static
+2026-03-07 15:30:07,326 - WARNING - [__main__] [404] Static exists: True
+2026-03-07 15:30:07,327 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 15:30:07] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-03-07 15:30:10,667 - DEBUG - [__main__] [EDIT] Request received. Session ID: unknown
+2026-03-07 15:30:10,667 - DEBUG - [__main__] [EDIT] Request args: {'file': '', 'from': 'view'}
+2026-03-07 15:30:10,667 - DEBUG - [__main__] [EDIT] Session keys: ['temp_md_file_path', 'temp_md_name']
+2026-03-07 15:30:10,668 - DEBUG - [__main__] [EDIT] Raw file_path from request: ''
+2026-03-07 15:30:10,668 - DEBUG - [__main__] [EDIT] Resolved file_path: ''
+2026-03-07 15:30:10,668 - DEBUG - [__main__] [EDIT] No file path, using session content, length: 0
+2026-03-07 15:30:10,668 - WARNING - [__main__] [EDIT] Empty content! Session ID: unknown, file_path: ''
+2026-03-07 15:30:10,668 - INFO - [__main__] [EDIT] Rendering editor. title='Новый файл', content_len=0
+2026-03-07 15:30:10,671 - ERROR - [app] Exception on /edit [GET]
+Traceback (most recent call last):
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\md_reader\web_editor\app.py", line 249, in edit_file
+    return render_template('editor.html',
+        title=title,
+        content=content,
+        file_path=resolved_path or '')
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "D:\md_reader\web_editor\templates\editor.html", line 387, in template
+    const serverContent = '{{ content|escapejs }}';
+    ^^^^^^^^^^^^^^^^^
+jinja2.exceptions.TemplateAssertionError: No filter named 'escapejs'.
+2026-03-07 15:30:10,673 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 15:30:10] "[35m[1mGET /edit?file=&from=view HTTP/1.1[0m" 500 -
+2026-03-07 15:30:22,414 - DEBUG - [__main__] [EDIT] Request received. Session ID: unknown
+2026-03-07 15:30:22,414 - DEBUG - [__main__] [EDIT] Request args: {'file': '', 'from': 'view'}
+2026-03-07 15:30:22,414 - DEBUG - [__main__] [EDIT] Session keys: []
+2026-03-07 15:30:22,414 - DEBUG - [__main__] [EDIT] Raw file_path from request: ''
+2026-03-07 15:30:22,414 - DEBUG - [__main__] [EDIT] Resolved file_path: ''
+2026-03-07 15:30:22,414 - DEBUG - [__main__] [EDIT] No file path, using session content, length: 0
+2026-03-07 15:30:22,415 - WARNING - [__main__] [EDIT] Empty content! Session ID: unknown, file_path: ''
+2026-03-07 15:30:22,415 - INFO - [__main__] [EDIT] Rendering editor. title='Новый файл', content_len=0
+2026-03-07 15:30:22,419 - ERROR - [app] Exception on /edit [GET]
+Traceback (most recent call last):
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\md_reader\web_editor\app.py", line 249, in edit_file
+    return render_template('editor.html',
+        title=title,
+        content=content,
+        file_path=resolved_path or '')
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "D:\md_reader\web_editor\templates\editor.html", line 387, in template
+    const serverContent = '{{ content|escapejs }}';
+    ^^^^^^^^^^^^^^^^^
+jinja2.exceptions.TemplateAssertionError: No filter named 'escapejs'.
+2026-03-07 15:30:22,421 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 15:30:22] "[35m[1mGET /edit?file=&from=view HTTP/1.1[0m" 500 -
+2026-03-07 16:35:39,695 - INFO - [__main__] TEMPLATE_FOLDER: D:\md_reader\web_editor\templates
+2026-03-07 16:35:39,695 - INFO - [__main__] STATIC_FOLDER: D:\md_reader\web_editor\static
+2026-03-07 16:35:39,695 - INFO - [__main__] STATIC_FOLDER exists: True
+2026-03-07 16:35:39,695 - INFO - [__main__] TEMP_CACHE_DIR: D:\md_reader\web_editor\temp_cache
+2026-03-07 16:35:39,699 - INFO - [__main__] Starting MD Reader
+2026-03-07 16:35:39,700 - INFO - [__main__] Server starting on port 58700
+2026-03-07 16:35:39,701 - INFO - [__main__] Opening browser: http://127.0.0.1:58700
+2026-03-07 16:35:39,716 - INFO - [werkzeug] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:58700
+2026-03-07 16:35:39,716 - INFO - [werkzeug] [33mPress CTRL+C to quit[0m
+2026-03-07 16:35:40,930 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:35:40] "GET / HTTP/1.1" 200 -
+2026-03-07 16:35:41,007 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:35:41] "GET /static/css/font-awesome.min.css HTTP/1.1" 200 -
+2026-03-07 16:35:41,010 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:35:41] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-03-07 16:35:41,050 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:35:41] "GET /static/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 -
+2026-03-07 16:35:41,061 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:35:41] "GET /static/favicon.ico HTTP/1.1" 200 -
+2026-03-07 16:39:47,948 - DEBUG - [__main__] [VIEW] Request received. Session ID: unknown
+2026-03-07 16:39:47,948 - DEBUG - [__main__] [VIEW] Request args: {'file': ''}
+2026-03-07 16:39:47,948 - DEBUG - [__main__] [VIEW] Raw file_path from request: ''
+2026-03-07 16:39:47,948 - DEBUG - [__main__] [VIEW] Resolved file_path: ''
+2026-03-07 16:39:47,948 - WARNING - [__main__] [VIEW] File path not resolved! Original: ''
+2026-03-07 16:39:47,949 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:39:47] "[31m[1mGET /view?file= HTTP/1.1[0m" 400 -
+2026-03-07 16:39:47,978 - WARNING - [__main__] [404] Path not found: /favicon.ico
+2026-03-07 16:39:47,979 - WARNING - [__main__] [404] Request URL: http://127.0.0.1:58700/favicon.ico
+2026-03-07 16:39:47,979 - WARNING - [__main__] [404] Static folder: D:\md_reader\web_editor\static
+2026-03-07 16:39:47,979 - WARNING - [__main__] [404] Static exists: True
+2026-03-07 16:39:47,979 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:39:47] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-03-07 16:39:55,104 - INFO - [__main__] [API] set-temp-content: temp_id=bf62d2f1-c73b-4f7f-a6b8-c72b99f90f8d, content_len=3311, file_path='USER_GUIDE_EN.md'
+2026-03-07 16:39:55,104 - DEBUG - [__main__] [API] Session temp_content_id set: bf62d2f1-c73b-4f7f-a6b8-c72b99f90f8d
+2026-03-07 16:39:55,104 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:39:55] "POST /api/set-temp-content HTTP/1.1" 200 -
+2026-03-07 16:39:55,114 - DEBUG - [__main__] [VIEW] Request received. Session ID: unknown
+2026-03-07 16:39:55,114 - DEBUG - [__main__] [VIEW] Request args: {'temp': '1'}
+2026-03-07 16:39:55,126 - DEBUG - [__main__] [TEMP] Loaded from bf62d2f1-c73b-4f7f-a6b8-c72b99f90f8d.md, length: 3311
+2026-03-07 16:39:55,126 - DEBUG - [__main__] [VIEW] Temp mode - loaded content length: 3311
+2026-03-07 16:39:55,126 - DEBUG - [__main__] [VIEW] Session keys: ['temp_content_id', 'temp_content_name', 'temp_md_file_path', 'temp_md_name']
+2026-03-07 16:39:55,183 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-03-07 16:39:55,185 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.footnotes.FootnoteExtension".
+2026-03-07 16:39:55,185 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.attr_list.AttrListExtension".
+2026-03-07 16:39:55,187 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.def_list.DefListExtension".
+2026-03-07 16:39:55,188 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-03-07 16:39:55,189 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.abbr.AbbrExtension".
+2026-03-07 16:39:55,189 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.md_in_html.MarkdownInHtmlExtension".
+2026-03-07 16:39:55,189 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.extra.ExtraExtension".
+2026-03-07 16:39:55,189 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2026-03-07 16:39:55,237 - INFO - [__main__] [VIEW] Rendered temp file, content length: 6538
+2026-03-07 16:39:55,242 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:39:55] "GET /view?temp=1 HTTP/1.1" 200 -
+2026-03-07 16:39:55,270 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:39:55] "[36mGET /static/css/font-awesome.min.css HTTP/1.1[0m" 304 -
+2026-03-07 16:39:55,271 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:39:55] "GET /static/js/marked.min.js HTTP/1.1" 200 -
+2026-03-07 16:39:55,283 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:39:55] "[36mGET /static/webfonts/fa-solid-900.woff2 HTTP/1.1[0m" 304 -
+2026-03-07 16:39:57,311 - INFO - [__main__] [API] set-temp-content: temp_id=390208be-5b9b-4a84-82b3-88f4f2bca989, content_len=3311, file_path=''
+2026-03-07 16:39:57,311 - DEBUG - [__main__] [API] Session temp_content_id set: 390208be-5b9b-4a84-82b3-88f4f2bca989
+2026-03-07 16:39:57,312 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:39:57] "POST /api/set-temp-content HTTP/1.1" 200 -
+2026-03-07 16:39:57,323 - DEBUG - [__main__] [EDIT] Request received. Session ID: unknown
+2026-03-07 16:39:57,323 - DEBUG - [__main__] [EDIT] Request args: {'file': '', 'from': 'view'}
+2026-03-07 16:39:57,323 - DEBUG - [__main__] [EDIT] Session keys: ['temp_content_id', 'temp_content_name', 'temp_md_file_path', 'temp_md_name']
+2026-03-07 16:39:57,323 - DEBUG - [__main__] [EDIT] Raw file_path from request: ''
+2026-03-07 16:39:57,323 - DEBUG - [__main__] [EDIT] Resolved file_path: ''
+2026-03-07 16:39:57,332 - DEBUG - [__main__] [TEMP] Loaded from 390208be-5b9b-4a84-82b3-88f4f2bca989.md, length: 3311
+2026-03-07 16:39:57,332 - INFO - [__main__] [EDIT] Using temp content, length: 3311
+2026-03-07 16:39:57,332 - INFO - [__main__] [EDIT] Rendering editor. title='Без названия', content_len=3311
+2026-03-07 16:39:57,338 - ERROR - [app] Exception on /edit [GET]
+Traceback (most recent call last):
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\md_reader\web_editor\app.py", line 298, in edit_file
+    return render_template('editor.html',
+        title=title,
+        content=content,
+        file_path=resolved_path or '')
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\templating.py", line 151, in render_template
+    return _render(app, template, context)
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\templating.py", line 132, in _render
+    rv = template.render(context)
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1295, in render
+    self.environment.handle_exception()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "D:\md_reader\web_editor\templates\editor.html", line 388, in top-level template code
+    const tempFromFlask = {{ temp_content|tojson }};
+    ^^^^^^^^^^^^^^^^^
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\filters.py", line 1721, in do_tojson
+    return htmlsafe_json_dumps(value, dumps=dumps, **kwargs)
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\utils.py", line 669, in htmlsafe_json_dumps
+    dumps(obj, **kwargs)
+    ~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\json\provider.py", line 179, in dumps
+    return json.dumps(obj, **kwargs)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py", line 261, in iterencode
+    return _iterencode(o, 0)
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\json\provider.py", line 121, in _default
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+TypeError: Object of type Undefined is not JSON serializable
+2026-03-07 16:39:57,343 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:39:57] "[35m[1mGET /edit?file=&from=view HTTP/1.1[0m" 500 -
+2026-03-07 16:52:22,211 - INFO - [__main__] TEMPLATE_FOLDER: D:\md_reader\web_editor\templates
+2026-03-07 16:52:22,211 - INFO - [__main__] STATIC_FOLDER: D:\md_reader\web_editor\static
+2026-03-07 16:52:22,211 - INFO - [__main__] STATIC_FOLDER exists: True
+2026-03-07 16:52:22,211 - INFO - [__main__] TEMP_CACHE_DIR: D:\md_reader\web_editor\temp_cache
+2026-03-07 16:52:22,214 - INFO - [__main__] Starting MD Reader
+2026-03-07 16:52:22,215 - INFO - [__main__] Server starting on port 59153
+2026-03-07 16:52:22,216 - INFO - [__main__] Opening browser: http://127.0.0.1:59153
+2026-03-07 16:52:22,229 - INFO - [werkzeug] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:59153
+2026-03-07 16:52:22,229 - INFO - [werkzeug] [33mPress CTRL+C to quit[0m
+2026-03-07 16:52:23,440 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:52:23] "GET / HTTP/1.1" 200 -
+2026-03-07 16:52:23,512 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:52:23] "GET /static/css/font-awesome.min.css HTTP/1.1" 200 -
+2026-03-07 16:52:23,515 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:52:23] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-03-07 16:52:23,556 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:52:23] "GET /static/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 -
+2026-03-07 16:52:23,566 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:52:23] "GET /static/favicon.ico HTTP/1.1" 200 -
+2026-03-07 16:52:29,655 - INFO - [__main__] [API] set-temp-content: temp_id=8a4c2353-409f-47c0-b3c9-dc19ce897398, content_len=3328, file_path='SPECIFICATION_RU.md'
+2026-03-07 16:52:29,655 - DEBUG - [__main__] [API] Session temp_content_id set: 8a4c2353-409f-47c0-b3c9-dc19ce897398
+2026-03-07 16:52:29,655 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:52:29] "POST /api/set-temp-content HTTP/1.1" 200 -
+2026-03-07 16:52:29,664 - DEBUG - [__main__] [VIEW] Request received. Session ID: unknown
+2026-03-07 16:52:29,665 - DEBUG - [__main__] [VIEW] Request args: {'temp': '1'}
+2026-03-07 16:52:29,670 - DEBUG - [__main__] [TEMP] Loaded from 8a4c2353-409f-47c0-b3c9-dc19ce897398.md, length: 3328
+2026-03-07 16:52:29,671 - DEBUG - [__main__] [VIEW] Temp mode - loaded content length: 3328
+2026-03-07 16:52:29,671 - DEBUG - [__main__] [VIEW] Session keys: ['temp_content_id', 'temp_content_name']
+2026-03-07 16:52:29,731 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-03-07 16:52:29,732 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.footnotes.FootnoteExtension".
+2026-03-07 16:52:29,732 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.attr_list.AttrListExtension".
+2026-03-07 16:52:29,733 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.def_list.DefListExtension".
+2026-03-07 16:52:29,734 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-03-07 16:52:29,734 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.abbr.AbbrExtension".
+2026-03-07 16:52:29,735 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.md_in_html.MarkdownInHtmlExtension".
+2026-03-07 16:52:29,735 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.extra.ExtraExtension".
+2026-03-07 16:52:29,735 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2026-03-07 16:52:29,965 - INFO - [__main__] [VIEW] Rendered temp file, content length: 8740
+2026-03-07 16:52:29,971 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:52:29] "GET /view?temp=1 HTTP/1.1" 200 -
+2026-03-07 16:52:29,998 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:52:29] "[36mGET /static/css/font-awesome.min.css HTTP/1.1[0m" 304 -
+2026-03-07 16:52:29,999 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:52:29] "GET /static/js/marked.min.js HTTP/1.1" 200 -
+2026-03-07 16:52:31,887 - INFO - [__main__] [API] set-temp-content: temp_id=6f6a3398-a8cc-4658-942a-e5fe18862f8f, content_len=3328, file_path=''
+2026-03-07 16:52:31,887 - DEBUG - [__main__] [API] Session temp_content_id set: 6f6a3398-a8cc-4658-942a-e5fe18862f8f
+2026-03-07 16:52:31,888 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:52:31] "POST /api/set-temp-content HTTP/1.1" 200 -
+2026-03-07 16:52:31,897 - DEBUG - [__main__] [EDIT] Request received. Session ID: unknown
+2026-03-07 16:52:31,897 - DEBUG - [__main__] [EDIT] Request args: {'file': '', 'from': 'view'}
+2026-03-07 16:52:31,897 - DEBUG - [__main__] [EDIT] Session keys: ['temp_content_id', 'temp_content_name']
+2026-03-07 16:52:31,897 - DEBUG - [__main__] [EDIT] Raw file_path from request: ''
+2026-03-07 16:52:31,897 - DEBUG - [__main__] [EDIT] Resolved file_path: ''
+2026-03-07 16:52:31,905 - DEBUG - [__main__] [TEMP] Loaded from 6f6a3398-a8cc-4658-942a-e5fe18862f8f.md, length: 3328
+2026-03-07 16:52:31,905 - INFO - [__main__] [EDIT] Using temp content, length: 3328
+2026-03-07 16:52:31,905 - INFO - [__main__] [EDIT] Rendering editor. title='Без названия', content_len=3328
+2026-03-07 16:52:31,910 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:52:31] "GET /edit?file=&from=view HTTP/1.1" 200 -
+2026-03-07 16:52:31,937 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:52:31] "[36mGET /static/css/font-awesome.min.css HTTP/1.1[0m" 304 -
+2026-03-07 16:52:31,940 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:52:31] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-03-07 16:52:31,941 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 16:52:31] "[36mGET /static/js/marked.min.js HTTP/1.1[0m" 304 -
+2026-03-07 17:26:12,062 - INFO - [__main__] TEMPLATE_FOLDER: D:\md_reader\web_editor\templates
+2026-03-07 17:26:12,062 - INFO - [__main__] STATIC_FOLDER: D:\md_reader\web_editor\static
+2026-03-07 17:26:12,062 - INFO - [__main__] STATIC_FOLDER exists: True
+2026-03-07 17:26:12,062 - INFO - [__main__] TEMP_CACHE_DIR: D:\md_reader\web_editor\temp_cache
+2026-03-07 17:26:12,066 - INFO - [__main__] Starting MD Reader
+2026-03-07 17:26:12,067 - INFO - [__main__] Server starting on port 59550
+2026-03-07 17:26:12,068 - INFO - [__main__] Opening browser: http://127.0.0.1:59550
+2026-03-07 17:26:12,095 - INFO - [werkzeug] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:59550
+2026-03-07 17:26:12,095 - INFO - [werkzeug] [33mPress CTRL+C to quit[0m
+2026-03-07 17:26:13,349 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:13] "GET / HTTP/1.1" 200 -
+2026-03-07 17:26:13,432 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:13] "GET /static/css/font-awesome.min.css HTTP/1.1" 200 -
+2026-03-07 17:26:13,432 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:13] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-03-07 17:26:13,483 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:13] "GET /static/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 -
+2026-03-07 17:26:13,494 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:13] "GET /static/favicon.ico HTTP/1.1" 200 -
+2026-03-07 17:26:19,817 - INFO - [__main__] [API] set-temp-content: temp_id=f0d9b1f0-29a5-428c-8ee6-eacc77d184e8, content_len=3075, file_path='SPECIFICATION_EN.md'
+2026-03-07 17:26:19,817 - DEBUG - [__main__] [API] Session temp_content_id set: f0d9b1f0-29a5-428c-8ee6-eacc77d184e8
+2026-03-07 17:26:19,818 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:19] "POST /api/set-temp-content HTTP/1.1" 200 -
+2026-03-07 17:26:19,841 - DEBUG - [__main__] [VIEW] Request received. Session ID: unknown
+2026-03-07 17:26:19,841 - DEBUG - [__main__] [VIEW] Request args: {'temp': '1'}
+2026-03-07 17:26:19,849 - DEBUG - [__main__] [TEMP] Loaded from f0d9b1f0-29a5-428c-8ee6-eacc77d184e8.md, length: 3075
+2026-03-07 17:26:19,849 - DEBUG - [__main__] [VIEW] Temp mode - loaded content length: 3075
+2026-03-07 17:26:19,849 - DEBUG - [__main__] [VIEW] Session keys: ['temp_content_id', 'temp_content_name']
+2026-03-07 17:26:20,039 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-03-07 17:26:20,040 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.footnotes.FootnoteExtension".
+2026-03-07 17:26:20,040 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.attr_list.AttrListExtension".
+2026-03-07 17:26:20,041 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.def_list.DefListExtension".
+2026-03-07 17:26:20,042 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-03-07 17:26:20,043 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.abbr.AbbrExtension".
+2026-03-07 17:26:20,044 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.md_in_html.MarkdownInHtmlExtension".
+2026-03-07 17:26:20,044 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.extra.ExtraExtension".
+2026-03-07 17:26:20,044 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2026-03-07 17:26:20,294 - INFO - [__main__] [VIEW] Rendered temp file, content length: 8487
+2026-03-07 17:26:20,300 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:20] "GET /view?temp=1 HTTP/1.1" 200 -
+2026-03-07 17:26:20,329 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:20] "[36mGET /static/css/font-awesome.min.css HTTP/1.1[0m" 304 -
+2026-03-07 17:26:20,389 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:20] "GET /static/js/marked.min.js HTTP/1.1" 200 -
+2026-03-07 17:26:22,863 - INFO - [__main__] [API] set-temp-content: temp_id=dea3b05e-8e30-42e3-bc8b-6ddc72cb6f80, content_len=3075, file_path=''
+2026-03-07 17:26:22,863 - DEBUG - [__main__] [API] Session temp_content_id set: dea3b05e-8e30-42e3-bc8b-6ddc72cb6f80
+2026-03-07 17:26:22,864 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:22] "POST /api/set-temp-content HTTP/1.1" 200 -
+2026-03-07 17:26:22,873 - DEBUG - [__main__] [EDIT] Request received. Session ID: unknown
+2026-03-07 17:26:22,873 - DEBUG - [__main__] [EDIT] Request args: {'file': '', 'from': 'view'}
+2026-03-07 17:26:22,873 - DEBUG - [__main__] [EDIT] Session keys: ['temp_content_id', 'temp_content_name']
+2026-03-07 17:26:22,873 - DEBUG - [__main__] [EDIT] Raw file_path from request: ''
+2026-03-07 17:26:22,873 - DEBUG - [__main__] [EDIT] Resolved file_path: ''
+2026-03-07 17:26:22,881 - DEBUG - [__main__] [TEMP] Loaded from dea3b05e-8e30-42e3-bc8b-6ddc72cb6f80.md, length: 3075
+2026-03-07 17:26:22,881 - INFO - [__main__] [EDIT] Using temp content, length: 3075
+2026-03-07 17:26:22,882 - INFO - [__main__] [EDIT] Rendering editor. title='Без названия', content_len=3075
+2026-03-07 17:26:22,912 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:22] "GET /edit?file=&from=view HTTP/1.1" 200 -
+2026-03-07 17:26:22,941 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:22] "[36mGET /static/css/font-awesome.min.css HTTP/1.1[0m" 304 -
+2026-03-07 17:26:22,943 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:22] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-03-07 17:26:22,944 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:22] "[36mGET /static/js/marked.min.js HTTP/1.1[0m" 304 -
+2026-03-07 17:26:29,839 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:29] "GET / HTTP/1.1" 200 -
+2026-03-07 17:26:29,867 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:29] "[36mGET /static/css/font-awesome.min.css HTTP/1.1[0m" 304 -
+2026-03-07 17:26:29,874 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:29] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-03-07 17:26:34,902 - INFO - [__main__] [API] set-temp-content: temp_id=acfb241f-8e07-4280-8049-794252e18a80, content_len=3674, file_path='USER_GUIDE_RU.md'
+2026-03-07 17:26:34,902 - DEBUG - [__main__] [API] Session temp_content_id set: acfb241f-8e07-4280-8049-794252e18a80
+2026-03-07 17:26:34,903 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:34] "POST /api/set-temp-content HTTP/1.1" 200 -
+2026-03-07 17:26:34,911 - DEBUG - [__main__] [VIEW] Request received. Session ID: unknown
+2026-03-07 17:26:34,911 - DEBUG - [__main__] [VIEW] Request args: {'temp': '1'}
+2026-03-07 17:26:34,918 - DEBUG - [__main__] [TEMP] Loaded from acfb241f-8e07-4280-8049-794252e18a80.md, length: 3674
+2026-03-07 17:26:34,918 - DEBUG - [__main__] [VIEW] Temp mode - loaded content length: 3674
+2026-03-07 17:26:34,918 - DEBUG - [__main__] [VIEW] Session keys: ['temp_content_id', 'temp_content_name']
+2026-03-07 17:26:34,918 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-03-07 17:26:34,918 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.footnotes.FootnoteExtension".
+2026-03-07 17:26:34,918 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.attr_list.AttrListExtension".
+2026-03-07 17:26:34,919 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.def_list.DefListExtension".
+2026-03-07 17:26:34,919 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-03-07 17:26:34,919 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.abbr.AbbrExtension".
+2026-03-07 17:26:34,919 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.md_in_html.MarkdownInHtmlExtension".
+2026-03-07 17:26:34,919 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.extra.ExtraExtension".
+2026-03-07 17:26:34,919 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2026-03-07 17:26:34,954 - INFO - [__main__] [VIEW] Rendered temp file, content length: 6901
+2026-03-07 17:26:34,954 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:34] "GET /view?temp=1 HTTP/1.1" 200 -
+2026-03-07 17:26:34,984 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:34] "[36mGET /static/css/font-awesome.min.css HTTP/1.1[0m" 304 -
+2026-03-07 17:26:34,987 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:34] "[36mGET /static/js/marked.min.js HTTP/1.1[0m" 304 -
+2026-03-07 17:26:37,095 - INFO - [__main__] [API] set-temp-content: temp_id=754013ae-1fc6-40a7-a1be-463e40eea948, content_len=3674, file_path=''
+2026-03-07 17:26:37,095 - DEBUG - [__main__] [API] Session temp_content_id set: 754013ae-1fc6-40a7-a1be-463e40eea948
+2026-03-07 17:26:37,096 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:37] "POST /api/set-temp-content HTTP/1.1" 200 -
+2026-03-07 17:26:37,105 - DEBUG - [__main__] [EDIT] Request received. Session ID: unknown
+2026-03-07 17:26:37,106 - DEBUG - [__main__] [EDIT] Request args: {'file': '', 'from': 'view'}
+2026-03-07 17:26:37,106 - DEBUG - [__main__] [EDIT] Session keys: ['temp_content_id', 'temp_content_name']
+2026-03-07 17:26:37,106 - DEBUG - [__main__] [EDIT] Raw file_path from request: ''
+2026-03-07 17:26:37,106 - DEBUG - [__main__] [EDIT] Resolved file_path: ''
+2026-03-07 17:26:37,113 - DEBUG - [__main__] [TEMP] Loaded from 754013ae-1fc6-40a7-a1be-463e40eea948.md, length: 3674
+2026-03-07 17:26:37,113 - INFO - [__main__] [EDIT] Using temp content, length: 3674
+2026-03-07 17:26:37,113 - INFO - [__main__] [EDIT] Rendering editor. title='Без названия', content_len=3674
+2026-03-07 17:26:37,114 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:37] "GET /edit?file=&from=view HTTP/1.1" 200 -
+2026-03-07 17:26:37,139 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:37] "[36mGET /static/css/font-awesome.min.css HTTP/1.1[0m" 304 -
+2026-03-07 17:26:37,143 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:37] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-03-07 17:26:37,144 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:37] "[36mGET /static/js/marked.min.js HTTP/1.1[0m" 304 -
+2026-03-07 17:26:50,228 - DEBUG - [__main__] [EDIT] Request received. Session ID: unknown
+2026-03-07 17:26:50,228 - DEBUG - [__main__] [EDIT] Request args: {'temp': '1', 'name': 'USER_GUIDE_RU.md'}
+2026-03-07 17:26:50,228 - DEBUG - [__main__] [EDIT] Session keys: ['temp_content_id', 'temp_content_name']
+2026-03-07 17:26:50,228 - DEBUG - [__main__] [EDIT] Raw file_path from request: ''
+2026-03-07 17:26:50,228 - DEBUG - [__main__] [EDIT] Resolved file_path: ''
+2026-03-07 17:26:50,229 - DEBUG - [__main__] [TEMP] Loaded from 754013ae-1fc6-40a7-a1be-463e40eea948.md, length: 3674
+2026-03-07 17:26:50,229 - INFO - [__main__] [EDIT] Using temp content, length: 3674
+2026-03-07 17:26:50,229 - INFO - [__main__] [EDIT] Rendering editor. title='Без названия', content_len=3674
+2026-03-07 17:26:50,229 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:50] "GET /edit?temp=1&name=USER_GUIDE_RU.md HTTP/1.1" 200 -
+2026-03-07 17:26:50,256 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:50] "[36mGET /static/css/font-awesome.min.css HTTP/1.1[0m" 304 -
+2026-03-07 17:26:50,261 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:50] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-03-07 17:26:50,262 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:50] "[36mGET /static/js/marked.min.js HTTP/1.1[0m" 304 -
+2026-03-07 17:26:54,008 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:54] "GET / HTTP/1.1" 200 -
+2026-03-07 17:26:54,039 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:54] "[36mGET /static/css/font-awesome.min.css HTTP/1.1[0m" 304 -
+2026-03-07 17:26:54,040 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:26:54] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-03-07 17:27:04,811 - INFO - [__main__] [API] set-temp-content: temp_id=8856ea06-4582-485d-8cc5-e50444f0465b, content_len=2367, file_path='CLAUDE.md'
+2026-03-07 17:27:04,811 - DEBUG - [__main__] [API] Session temp_content_id set: 8856ea06-4582-485d-8cc5-e50444f0465b
+2026-03-07 17:27:04,812 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:27:04] "POST /api/set-temp-content HTTP/1.1" 200 -
+2026-03-07 17:27:04,820 - DEBUG - [__main__] [VIEW] Request received. Session ID: unknown
+2026-03-07 17:27:04,820 - DEBUG - [__main__] [VIEW] Request args: {'temp': '1'}
+2026-03-07 17:27:04,828 - DEBUG - [__main__] [TEMP] Loaded from 8856ea06-4582-485d-8cc5-e50444f0465b.md, length: 2367
+2026-03-07 17:27:04,829 - DEBUG - [__main__] [VIEW] Temp mode - loaded content length: 2367
+2026-03-07 17:27:04,829 - DEBUG - [__main__] [VIEW] Session keys: ['temp_content_id', 'temp_content_name']
+2026-03-07 17:27:04,829 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.fenced_code.FencedCodeExtension".
+2026-03-07 17:27:04,829 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.footnotes.FootnoteExtension".
+2026-03-07 17:27:04,829 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.attr_list.AttrListExtension".
+2026-03-07 17:27:04,829 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.def_list.DefListExtension".
+2026-03-07 17:27:04,829 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.tables.TableExtension".
+2026-03-07 17:27:04,829 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.abbr.AbbrExtension".
+2026-03-07 17:27:04,829 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.md_in_html.MarkdownInHtmlExtension".
+2026-03-07 17:27:04,829 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.extra.ExtraExtension".
+2026-03-07 17:27:04,830 - DEBUG - [MARKDOWN] Successfully loaded extension "markdown.extensions.codehilite.CodeHiliteExtension".
+2026-03-07 17:27:04,856 - INFO - [__main__] [VIEW] Rendered temp file, content length: 3910
+2026-03-07 17:27:04,856 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:27:04] "GET /view?temp=1 HTTP/1.1" 200 -
+2026-03-07 17:27:04,882 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:27:04] "[36mGET /static/css/font-awesome.min.css HTTP/1.1[0m" 304 -
+2026-03-07 17:27:04,884 - INFO - [werkzeug] 127.0.0.1 - - [07/Mar/2026 17:27:04] "[36mGET /static/js/marked.min.js HTTP/1.1[0m" 304 -

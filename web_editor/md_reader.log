@@ -1,0 +1,84 @@
+2026-03-07 11:49:41,511 - INFO - Server starting on port 49906
+2026-03-07 11:49:41,512 - INFO - Opening browser: http://127.0.0.1:49906
+2026-03-07 11:49:41,525 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:49906
+2026-03-07 11:49:41,525 - INFO - [33mPress CTRL+C to quit[0m
+2026-03-07 11:49:42,737 - INFO - 127.0.0.1 - - [07/Mar/2026 11:49:42] "GET / HTTP/1.1" 200 -
+2026-03-07 11:49:42,829 - INFO - 127.0.0.1 - - [07/Mar/2026 11:49:42] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-03-07 14:48:42,822 - INFO - TEMPLATE_FOLDER: D:\md_reader\web_editor\templates
+2026-03-07 14:48:42,822 - INFO - STATIC_FOLDER: D:\md_reader\web_editor\static
+2026-03-07 14:48:42,822 - INFO - STATIC_FOLDER exists: True
+2026-03-07 14:48:42,825 - INFO - Starting MD Reader
+2026-03-07 14:48:42,826 - INFO - Server starting on port 55772
+2026-03-07 14:48:42,826 - INFO - Opening browser: http://127.0.0.1:55772
+2026-03-07 14:48:42,839 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:55772
+2026-03-07 14:48:42,839 - INFO - [33mPress CTRL+C to quit[0m
+2026-03-07 14:48:44,058 - INFO - 127.0.0.1 - - [07/Mar/2026 14:48:44] "GET / HTTP/1.1" 200 -
+2026-03-07 14:48:44,133 - INFO - 127.0.0.1 - - [07/Mar/2026 14:48:44] "GET /static/css/font-awesome.min.css HTTP/1.1" 200 -
+2026-03-07 14:48:44,134 - INFO - 127.0.0.1 - - [07/Mar/2026 14:48:44] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-03-07 14:48:44,178 - INFO - 127.0.0.1 - - [07/Mar/2026 14:48:44] "GET /static/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 -
+2026-03-07 14:48:44,189 - INFO - 127.0.0.1 - - [07/Mar/2026 14:48:44] "GET /static/favicon.ico HTTP/1.1" 200 -
+2026-03-07 14:48:47,122 - INFO - TEMPLATE_FOLDER: D:\md_reader\web_editor\templates
+2026-03-07 14:48:47,122 - INFO - STATIC_FOLDER: D:\md_reader\web_editor\static
+2026-03-07 14:48:47,122 - INFO - STATIC_FOLDER exists: True
+2026-03-07 14:48:47,125 - INFO - Starting MD Reader
+2026-03-07 14:48:47,126 - INFO - Server starting on port 55793
+2026-03-07 14:48:47,126 - INFO - Opening browser: http://127.0.0.1:55793
+2026-03-07 14:48:47,140 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:55793
+2026-03-07 14:48:47,140 - INFO - [33mPress CTRL+C to quit[0m
+2026-03-07 14:48:48,372 - INFO - 127.0.0.1 - - [07/Mar/2026 14:48:48] "GET / HTTP/1.1" 200 -
+2026-03-07 14:48:48,446 - INFO - 127.0.0.1 - - [07/Mar/2026 14:48:48] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-03-07 14:48:48,447 - INFO - 127.0.0.1 - - [07/Mar/2026 14:48:48] "GET /static/css/font-awesome.min.css HTTP/1.1" 200 -
+2026-03-07 14:48:48,491 - INFO - 127.0.0.1 - - [07/Mar/2026 14:48:48] "GET /static/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 -
+2026-03-07 14:48:48,505 - INFO - 127.0.0.1 - - [07/Mar/2026 14:48:48] "GET /static/favicon.ico HTTP/1.1" 200 -
+2026-03-07 14:48:49,460 - INFO - 127.0.0.1 - - [07/Mar/2026 14:48:49] "POST /api/set-temp-content HTTP/1.1" 200 -
+2026-03-07 14:48:49,589 - INFO - 127.0.0.1 - - [07/Mar/2026 14:48:49] "GET /view?temp=1 HTTP/1.1" 200 -
+2026-03-07 14:48:49,611 - INFO - 127.0.0.1 - - [07/Mar/2026 14:48:49] "[36mGET /static/css/font-awesome.min.css HTTP/1.1[0m" 304 -
+2026-03-07 14:48:49,613 - INFO - 127.0.0.1 - - [07/Mar/2026 14:48:49] "GET /static/js/marked.min.js HTTP/1.1" 200 -
+2026-03-07 14:48:58,301 - INFO - 127.0.0.1 - - [07/Mar/2026 14:48:58] "POST /api/set-temp-content HTTP/1.1" 200 -
+2026-03-07 14:48:58,423 - INFO - 127.0.0.1 - - [07/Mar/2026 14:48:58] "GET /view?temp=1 HTTP/1.1" 200 -
+2026-03-07 14:48:58,453 - INFO - 127.0.0.1 - - [07/Mar/2026 14:48:58] "[36mGET /static/css/font-awesome.min.css HTTP/1.1[0m" 304 -
+2026-03-07 14:48:58,455 - INFO - 127.0.0.1 - - [07/Mar/2026 14:48:58] "GET /static/js/marked.min.js HTTP/1.1" 200 -
+2026-03-07 14:49:00,678 - INFO - 127.0.0.1 - - [07/Mar/2026 14:49:00] "POST /api/set-temp-content HTTP/1.1" 200 -
+2026-03-07 14:49:00,692 - ERROR - Exception on /edit [GET]
+Traceback (most recent call last):
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\md_reader\web_editor\app.py", line 178, in edit_file
+    return render_template('editor.html',
+        title=Path(file_path).name if file_path else 'Новый файл',
+        content=content,
+        file_path=file_path or '')
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\flask\templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\369\AppData\Local\Programs\Python\Python313\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "D:\md_reader\web_editor\templates\editor.html", line 370, in template
+    const serverContent = '{{ content|escapejs }}';
+    ^^^^^^^^^^^^^^^^^
+jinja2.exceptions.TemplateAssertionError: No filter named 'escapejs'.
+2026-03-07 14:49:00,695 - INFO - 127.0.0.1 - - [07/Mar/2026 14:49:00] "[35m[1mGET /edit?file=&from=view HTTP/1.1[0m" 500 -
+2026-03-07 14:49:00,748 - INFO - 127.0.0.1 - - [07/Mar/2026 14:49:00] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-03-07 14:49:04,335 - INFO - 127.0.0.1 - - [07/Mar/2026 14:49:04] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
