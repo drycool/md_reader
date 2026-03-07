@@ -27,34 +27,34 @@ logger = logging.getLogger(__name__)
 from flask import Flask, render_template, request, jsonify, session
 
 # Определяем корень проекта и путь к шаблонам
-def get_template_folder():
-    """Определение папки с шаблонами (для EXE и разработки)"""
+def get_base_path():
+    """Определение базового пути (для EXE и разработки)"""
     if getattr(sys, 'frozen', False):
-        # Запущен как EXE
-        base_path = Path(sys._MEIPASS)
-    else:
-        # Запущен как Python скрипт
-        base_path = Path(__file__).parent
-    return base_path / 'templates'
+        return Path(sys._MEIPASS)
+    return Path(__file__).parent
+
+def get_template_folder():
+    """Определение папки с шаблонами"""
+    return get_base_path() / 'templates'
 
 def get_static_folder():
-    """Определение папки со статикой (для EXE и разработки)"""
-    if getattr(sys, 'frozen', False):
-        # Запущен как EXE
-        base_path = Path(sys._MEIPASS)
-    else:
-        # Запущен как Python скрипт
-        base_path = Path(__file__).parent
-    return base_path / 'static'
+    """Определение папки со статикой"""
+    return get_base_path() / 'static'
 
+# Для temp_cache используем рабочую директорию (доступна для записи)
 PROJECT_ROOT = Path(__file__).parent.parent.resolve()
 WORKING_DIR = Path(__file__).parent
 TEMPLATE_FOLDER = get_template_folder()
 STATIC_FOLDER = get_static_folder()
 
 # Папка для временного хранения контента (вместо сессий)
-TEMP_CACHE_DIR = WORKING_DIR / 'temp_cache'
-TEMP_CACHE_DIR.mkdir(exist_ok=True)
+# Для EXE используем tempfile, для разработки - локальную папку
+if getattr(sys, 'frozen', False):
+    import tempfile
+    TEMP_CACHE_DIR = Path(tempfile.gettempdir()) / 'md_reader_temp'
+else:
+    TEMP_CACHE_DIR = WORKING_DIR / 'temp_cache'
+TEMP_CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 logger.info(f"TEMPLATE_FOLDER: {TEMPLATE_FOLDER}")
 logger.info(f"STATIC_FOLDER: {STATIC_FOLDER}")
