@@ -14,12 +14,25 @@ from pathlib import Path
 from urllib.parse import quote
 
 # Настройка логирования
+import tempfile
+
+# Определяем папку для логов
+if getattr(sys, 'frozen', False):
+    # Для EXE используем %TEMP%
+    log_dir = Path(tempfile.gettempdir()) / 'md_reader_logs'
+else:
+    # Для разработки - папка приложения
+    log_dir = Path(__file__).parent
+
+log_dir.mkdir(parents=True, exist_ok=True)
+log_file = log_dir / 'app_debug.log'
+
 logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(levelname)s - [%(name)s] %(message)s',
     handlers=[
         logging.StreamHandler(sys.stdout),
-        logging.FileHandler('app_debug.log', encoding='utf-8')
+        logging.FileHandler(str(log_file), encoding='utf-8')
     ]
 )
 logger = logging.getLogger(__name__)
@@ -151,6 +164,36 @@ def get_temp_content():
         return None, None
 
 
+def save_temp_content(content, file_name=''):
+    """Сохранение контента во временный файл (для EXE запуска с файлом)"""
+    import uuid
+    temp_id = str(uuid.uuid4())
+    temp_file = TEMP_CACHE_DIR / f"{temp_id}.md"
+
+    try:
+        temp_file.write_text(content, encoding='utf-8')
+        logger.info(f"[TEMP] Saved content to {temp_file.name}, length: {len(content)}")
+        return temp_id, file_name or 'Без названия'
+    except Exception as e:
+        logger.error(f"[TEMP] Failed to save temp file: {e}")
+        return None, None
+
+
+def save_temp_content(content, file_name=''):
+    """Сохранение контента в temp_cache (для EXE)"""
+    import uuid
+    temp_id = str(uuid.uuid4())
+    temp_file = TEMP_CACHE_DIR / f"{temp_id}.md"
+
+    try:
+        temp_file.write_text(content, encoding='utf-8')
+        logger.info(f"[TEMP] Saved content to {temp_file.name}, length: {len(content)}")
+        return temp_id, file_name or 'Без названия'
+    except Exception as e:
+        logger.error(f"[TEMP] Failed to save temp file: {e}")
+        return None, None
+
+
 def clear_temp_cache():
     """Очистка папки temp_cache от старых файлов"""
     if not TEMP_CACHE_DIR.exists():
@@ -197,10 +240,23 @@ def view_file():
     logger.debug(f"[VIEW] Request received. Session ID: {session_id}")
     logger.debug(f"[VIEW] Request args: {dict(request.args)}")
 
-    # Временный файл (drag&drop)
+    # Временный файл (drag&drop) или запуск из EXE с файлом
     if request.args.get('temp') == '1':
-        # Читаем из temp_cache файла
+        # Проверяем: сначала session, потом URL параметр (для EXE)
         content, title = get_temp_content()
+
+        # Если не найдено в сессии, пробуем получить по temp_id из URL
+        if not content and request.args.get('temp_id'):
+            temp_id = request.args.get('temp_id')
+            temp_file = TEMP_CACHE_DIR / f"{temp_id}.md"
+            if temp_file.exists():
+                try:
+                    content = temp_file.read_text(encoding='utf-8')
+                    title = request.args.get('name', 'Без названия')
+                    logger.info(f"[VIEW] Loaded from temp_id={temp_id}, length: {len(content)}")
+                except Exception as e:
+                    logger.error(f"[VIEW] Failed to load from temp_id: {e}")
+
         title = title or 'Без названия'
 
         logger.debug(f"[VIEW] Temp mode - loaded content length: {len(content) if content else 0}")
