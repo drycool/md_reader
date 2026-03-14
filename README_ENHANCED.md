@@ -23,9 +23,45 @@
 
 ## 📦 Установка
 
+### Способ 1: Готовый EXE (рекомендуется для Windows)
+
+Скачайте готовый исполняемый файл из раздела [Releases](https://github.com/your-repo/md_reader/releases):
+
+```bash
+# Запуск без аргументов - выбор файла через диалог
+MarkdownReader.exe
+
+# Просмотр файла
+MarkdownReader.exe document.md
+
+# Редактирование файла
+MarkdownReader.exe document.md edit
+```
+
+### Способ 2: Веб-редактор (Flask)
+
 ```bash
 # Клонирование репозитория
-git clone <repository-url>
+git clone https://github.com/your-repo/md_reader.git
+cd md_reader/web_editor
+
+# Установка зависимостей
+pip install flask markdown
+
+# Запуск редактора
+python app.py                    # выбор файла
+python app.py document.md        # просмотр
+python app.py document.md edit  # редактирование
+
+# Или через скрипт запуска
+python run.py
+```
+
+### Способ 3: Python пакет
+
+```bash
+# Клонирование репозитория
+git clone https://github.com/your-repo/md_reader.git
 cd md_reader
 
 # Установка зависимостей
@@ -34,6 +70,13 @@ pip install -e .
 # Для разработки (включает инструменты тестирования и линтинга)
 pip install -e ".[dev]"
 ```
+
+### Быстрый старт (Windows)
+
+| Файл | Описание |
+|------|----------|
+| `view_demo.bat` | Открыть demo.md в просмотрщике |
+| `edit_demo.bat` | Открыть demo.md в редакторе |
 
 ## 🎯 Использование
 
